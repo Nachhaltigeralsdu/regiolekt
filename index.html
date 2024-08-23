@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Regiolekte in Deutschland</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Arial', sans-serif;
+            margin: 0.5rem 0;
+        }
+
+        h1 {
+            color: #333;
+            transition: color 0.5s ease;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Styles */
+        nav {
+            background-color: rgba(255, 255, 255, 0.8); /* Transparent, angepasst an den Hintergrund */
+            color: #333;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        nav.scrolled {
+            background-color: rgba(51, 51, 51, 0.8); /* Dunklere Farbe nach Scrollen */
+            color: #fff;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: inherit; /* Passt die Linkfarbe an den Text an */
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        /* Hamburger Menu Styles */
+        .menu-icon {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .menu-icon.active + .nav-menu {
+            display: block;
+        }
+
+        .nav-menu {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                background-color: rgba(255, 255, 255, 0.9);
+                position: absolute;
+                top: 60px;
+                right: 0;
+                width: 200px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            nav ul li a {
+                padding: 1rem;
+            }
+
+            .menu-icon.active + .nav-menu {
+                display: flex;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            background: url('https://source.unsplash.com/1600x900/?germany,landscape') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            flex-direction: column;
+            padding-top: 5rem; /* Platz für die Navigationsleiste */
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Image Below Title */
+        .hero img {
+            width: 50%;
+            height: auto;
+            margin-top: 2rem;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .hero img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Main Content Styles */
+        main {
+            padding: 4rem 0;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        section h2 {
+            margin-bottom: 1rem;
+        }
+
+        section p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Video Section */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 10px;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: #f5f5f5;
+            color: #333;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body.dark-mode footer {
+            background-color: #333;
+            color: #f5f5f5;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #333; /* Gleiche Farbe wie die Navbar im Dunkelmodus */
+            color: #f5f5f5;
+        }
+
+        body.dark-mode nav {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: #f5f5f5;
+        }
+
+        body.dark-mode nav ul li a {
+            color: #f5f5f5;
+        }
+
+        body.dark-mode h1 {
+            color: #f5f5f5;
+        }
+
+        /* Transition for Color Mode */
+        body, nav, footer, h1 {
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero img {
+                width: 80%;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container">
+            <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+            <ul class="nav-menu">
+                <li><a href="#" class="logo">Regiolekte</a></li>
+                <li><a href="#about" class="nav-link">Über</a></li>
+                <li><a href="#features" class="nav-link">Merkmale</a></li>
+                <li><a href="#video" class="nav-link">Video</a></li>
+                <li><a href="javascript:void(0)" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Regiolekte in Deutschland</h1>
+            <img src="Fotolia_37020572_S-520x413.jpg" alt="Regiolekt Landschaft">
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- About Section -->
+        <section id="about">
+            <h2>Was ist ein Regiolekt?</h2>
+            <p>
+                Ein Regiolekt ist eine spezielle Variante einer Sprache, die in einer bestimmten Region gesprochen wird. 
+                Er ist oft stark mit der lokalen Kultur und Identität verbunden und unterscheidet sich von der Standardsprache 
+                des Landes durch besondere Ausdrücke, Aussprachen und manchmal auch grammatikalische Besonderheiten.
+            </p>
+            <p>
+                Regiolekte haben tiefe Wurzeln in der Geschichte und Kultur der Regionen, in denen sie gesprochen werden. 
+                Oft sind sie eine Quelle des Stolzes für die Einwohner dieser Regionen und tragen zur regionalen Identität bei. 
+                In Deutschland gibt es eine Vielzahl von Regiolekten, die in verschiedenen Bundesländern und Regionen gesprochen werden.
+            </p>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features">
+            <h2>Merkmale von Regiolekten</h2>
+            
+                <div>
+                    <h3>Geografische Verbundenheit</h3>
+                    <p>
+                        Regiolekte werden in bestimmten Regionen gesprochen und spiegeln oft die geografische, kulturelle und soziale 
+                        Isolation einer Gemeinschaft wider. Zum Beispiel gibt es im Deutschen verschiedene Regiolekte wie das Bairische 
+                        in Bayern oder das Sächsische in Sachsen.
+                    </p>
+                </div>
+            
+
+            <h3>Unterschiede zur Standardsprache</h3>
+            <p>
+                Regiolekte unterscheiden sich oft in der Aussprache, im Wortschatz und manchmal auch in der Grammatik von der 
+                Standardsprache.
+            </p>
+            <img src="so_geht_saechsisch_logo.png" alt="Sächsischer Regiolekt" style="width: 100%; height: auto; border-radius: 10px; margin-top: 1.5rem;">
+            <h3>Soziale Funktion und Wahrnehmung</h3>
+            <p>
+                Regiolekte tragen zur sozialen Identität bei und können sowohl ein Gefühl der Zugehörigkeit als auch der 
+                Abgrenzung fördern. In einigen Kontexten werden sie stolz verwendet, in anderen könnten sie auch negativ 
+                bewertet werden.
+            </p>
+
+            <h3>Veränderlichkeit und Schutz</h3>
+            <p>
+                Wie andere Dialekte sind auch Regiolekte Veränderungen unterworfen. Sie können durch Medien, Migration und 
+                Bildung beeinflusst werden. In einigen Regionen gibt es Bemühungen, sie zu bewahren und zu fördern, besonders 
+                wenn sie als bedroht gelten.
+            </p>
+
+            <h3>Beziehung zu anderen sprachlichen Formen</h3>
+            <p>
+                Neben Regiolekten und der Standardsprache gibt es auch Dialekte und Soziolekte. Dialekte sind oft stärker von 
+                der Standardsprache abweichend und geografisch sehr begrenzt, während Soziolekte sprachliche Besonderheiten 
+                einer bestimmten sozialen Gruppe darstellen.
+            </p>
+        </section>
+
+        <!-- Video Section -->
+        <section id="video">
+            <h2>Video über Sächsische</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="Sächsischer Dialekt_ Gemütlich, aber schwer verständlich_ (1).mp4" type="video/mp4">
+                    Ihr Browser unterstützt dieses Videoformat nicht.
+                </video>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p><a href="#">Impressum</a> • <a href="#">Datenschutz</a></p>
+        <p>Vorstellung und Recherche: Finn und Jos • Recherche: Nicklas • Visualisierung: Paul</p>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle
+        const toggle = document.getElementById('dark-mode-toggle');
+        toggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = toggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Toggle Menu
+        function toggleMenu() {
+            const menuIcon = document.querySelector('.menu-icon');
+            const navMenu = document.querySelector('.nav-menu');
+            menuIcon.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        }
+
+        // Scrollspy for Navigation
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 70;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Change navbar background on scroll
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
