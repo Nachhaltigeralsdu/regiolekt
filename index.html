@@ -63,7 +63,7 @@
         }
 
         nav {
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.135);
             color: #fff;
             padding: 1rem 0;
             position: fixed;
@@ -165,7 +165,7 @@
 
         .hero {
             height: 100vh;
-            background: url('images/background.jpg') no-repeat center center/cover;
+            background: url(Cover_der_presentation) no-repeat center center/cover;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -343,10 +343,6 @@
             background-color: #1e1e1e;
         }
 
-        body.dark-mode .sources-container ul {
-            color: #ddd;
-        }
-
         .sources-container ul {
             list-style-type: none;
             padding-left: 0;
@@ -367,6 +363,10 @@
 
         body.dark-mode .sources-container li::before {
             color: #82aaff;
+        }
+
+        body.dark-mode .sources-container ul {
+            color: #ddd;
         }
 
         @media (max-width: 768px) {
@@ -454,4 +454,284 @@
             animation: slideIn 0.5s ease-in-out forwards;
         }
 
-       
+        .fullscreen .content h2 {
+            flex: 1;
+            font-size: 2rem;
+        }
+
+        .fullscreen .content ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            flex: 1;
+            margin-right: 2rem;
+        }
+
+        .fullscreen .content img {
+            max-width: 40%;
+            border-radius: 10px;
+            flex: 1;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: imageSlideIn 0.5s ease-in-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        .fullscreen .buttons {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .fullscreen .buttons .btn {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .fullscreen .buttons .btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        body.dark-mode .fullscreen .buttons .btn {
+            background-color: #569cd6;
+        }
+
+        body.dark-mode .fullscreen .buttons .btn:hover {
+            background-color: #3e8acd;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes imageSlideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <nav id="navbar">
+        <div class="container">
+            <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+            <ul class="nav-menu">
+                <li><a href="#" class="logo">Oberbegriff</a></li>
+                <li><a href="#bullet-points-1" class="nav-link">Präsentation</a></li>
+                <li><a href="#sources" class="nav-link">Quellen</a></li>
+                <li><a href="javascript:void(0)" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Willkommen zur Präsentation</h1>
+            <p>Diese Vorlage bietet Ihnen eine Grundlage für Ihre zukünftigen Schulpräsentationen.</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="bullet-points-1" class="bullet-points-container fade-in">
+            <div>
+                <h2>Thema 1</h2>
+                <ul>
+                    <li>Wichtiger Punkt A</li>
+                    <li>Wichtiger Punkt B</li>
+                    <li>Wichtiger Punkt C</li>
+                </ul>
+            </div>
+            <img src="Bild1" alt="Bild zu Thema 1">
+        </section>
+
+        <section id="sources" class="sources-container fade-in">
+            <h2>Quellen</h2>
+            <ul>
+                <li>Quelle 1: Buch XYZ, Autor ABC, Verlag DEF</li>
+                <li>Quelle 2: Artikel aus Fachzeitschrift GHI, Ausgabe JKL</li>
+                <li>Quelle 3: Website MNO, abgerufen am [Datum]</li>
+                <li>Quelle 4: Studie PQR, veröffentlicht von STU, Jahr VWX</li>
+                <li>Quelle 5: Vortrag von YZ, gehalten am [Datum] bei [Veranstaltung]</li>
+            </ul>
+        </section>
+    </main>
+
+    <button id="back-to-top" title="Nach oben">⬆️</button>
+
+    <div id="fullscreen-modal" class="fullscreen">
+        <div class="content">
+            <div>
+                <h2></h2>
+                <ul></ul>
+            </div>
+            <img src="" alt="Vollbild Bild">
+        </div>
+        <div class="buttons">
+            <button class="btn close-btn">Zurück</button>
+            <button class="btn next-btn">Nächste</button>
+        </div>
+    </div>
+
+    <footer>
+        <p><a href="#">Impressum</a> • <a href="#">Datenschutz</a></p>
+        <p>Pauwe</p>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'none';
+        });
+
+        const toggle = document.getElementById('dark-mode-toggle');
+        toggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = toggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        function toggleMenu() {
+            const menuIcon = document.querySelector('.menu-icon');
+            const navMenu = document.querySelector('.nav-menu');
+            menuIcon.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        }
+
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 70;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        document.querySelectorAll('a.nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const bulletSections = document.querySelectorAll('.bullet-points-container, .fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        bulletSections.forEach(section => {
+            observer.observe(section);
+        });
+
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        const bulletPoints = document.querySelectorAll('.bullet-points-container');
+        const fullscreenModal = document.getElementById('fullscreen-modal');
+        const closeBtn = fullscreenModal.querySelector('.close-btn');
+        const nextBtn = fullscreenModal.querySelector('.next-btn');
+        let currentPointIndex = 0;
+
+        bulletPoints.forEach((bullet, index) => {
+            bullet.addEventListener('click', () => {
+                currentPointIndex = index;
+                showFullscreen(bullet);
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            hideFullscreen();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentPointIndex = (currentPointIndex + 1) % bulletPoints.length;
+            showFullscreen(bulletPoints[currentPointIndex]);
+        });
+
+        function showFullscreen(bullet) {
+            fullscreenModal.querySelector('h2').textContent = bullet.querySelector('h2').textContent;
+            fullscreenModal.querySelector('ul').innerHTML = bullet.querySelector('ul').innerHTML;
+            fullscreenModal.querySelector('img').src = bullet.querySelector('img').src;
+            fullscreenModal.classList.add('visible');
+        }
+
+        function hideFullscreen() {
+            fullscreenModal.classList.remove('visible');
+            fullscreenModal.classList.add('exiting');
+            setTimeout(() => {
+                fullscreenModal.classList.remove('exiting');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
