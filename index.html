@@ -1,302 +1,42 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Internet als Religion</title>
+    <title>Präsentationsvorlage</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-            transition: background-color 0.5s, color 0.5s;
-            overflow-x: hidden;
-        }
-        body.dark-mode { background-color: #121212; color: #f5f5f5; }
-        h1, h2, h3, h4 { margin: 0.5rem 0; }
-        h1 { font-size: 6vw; color: #fff; transition: color 0.5s; }
-        body.dark-mode h1 { color: #fff; }
-        a { text-decoration: none; color: #007BFF; transition: color 0.3s; }
-        body.dark-mode a { color: #82aaff; }
-        a:hover { color: #0056b3; }
-        body.dark-mode a:hover { color: #569cd6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 2vh 5vw; }
-        nav {
-            background-color: rgba(255, 255, 255, 0.135); color: #fff; padding: 1rem 0;
-            position: fixed; width: 100%; top: 0; z-index: 1000; transition: background-color 0.5s, color 0.5s;
-            backdrop-filter: blur(5px);
-        }
-        nav a { color: #fff; } /* Navbar-Schrift immer weiß */
-        body.dark-mode nav { background-color: rgba(18, 18, 18, 0.8); }
-        nav.scrolled { background-color: rgba(51, 51, 51, 0.8); color: #fff; }
-        nav ul { display: flex; justify-content: space-between; align-items: center; margin: 0; padding: 0; list-style: none; }
-        nav ul li { margin: 0 1rem; }
-        nav ul li a { padding: 0.5rem 1rem; border-radius: 5px; transition: background-color 0.3s, color 0.3s; }
-        nav ul li a:hover, nav ul li a.active { background-color: #007BFF; color: #fff; }
-        body.dark-mode nav ul li a:hover, body.dark-mode nav ul li a.active { background-color: #569cd6; }
-        .menu-icon { display: none; font-size: 1.8rem; cursor: pointer; }
-        .menu-icon.active + .nav-menu { display: block; }
-        .nav-menu { display: flex; }
-        @media (max-width: 768px) {
-            .menu-icon { display: block; }
-            .nav-menu {
-                display: none; flex-direction: column; background-color: rgba(255, 255, 255, 0.9);
-                position: absolute; top: 60px; right: 0; width: 200px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            }
-            body.dark-mode .nav-menu { background-color: rgba(18, 18, 18, 0.9); }
-            nav ul { flex-direction: column; }
-            nav ul li { margin: 0.5rem 0; }
-            nav ul li a { padding: 1rem; }
-            .menu-icon.active + .nav-menu { display: flex; }
-        }
-        .hero {
-            height: 100vh; background: url(IMG_4246.jpeg) no-repeat center center/cover;
-            display: flex; justify-content: center; align-items: center; color: #fff; text-align: center;
-            flex-direction: column; padding-top: 5rem; position: relative; overflow: hidden;
-        }
-        .hero h1 { font-size: 3rem; margin-bottom: 1rem; animation: fadeInDown 2s ease-in-out; }
-        .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; animation: fadeInUp 2s ease-in-out; }
-        body.dark-mode .hero { background-color: #333; }
-        .hero::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: inherit;
-            background-attachment: fixed; z-index: -1; transform: scale(1.1); filter: blur(5px); opacity: 0.7;
-        }
-        @keyframes fadeInDown { 0% { opacity: 0; transform: translateY(-20px); } 100% { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
-        main { padding: 4rem 0; }
-        section { margin-bottom: 4rem; }
-        section h2 {
-            margin-bottom: 1rem; position: relative; overflow: hidden;
-        }
-        section h2::after {
-            content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 4px; background: #007BFF;
-            transition: width 0.4s ease-in-out;
-        }
-        section h2:hover::after { width: 100%; }
-        section p { font-size: 1rem; margin-bottom: 1.5rem; }
-        body.dark-mode section p { color: #ddd; }
-        .bullet-points-container, .sources-container {
-            background-color: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;
-            opacity: 0; transform: translateX(-50px); transition: opacity 0.5s, transform 0.5s;
-        }
-        .bullet-points-container.visible, .sources-container.visible { opacity: 1; transform: translateX(0); }
-        body.dark-mode .bullet-points-container, body.dark-mode .sources-container { background-color: #1e1e1e; }
-        body.dark-mode .bullet-points-container ul, body.dark-mode .sources-container ul { color: #ddd; }
-        .bullet-points-container img, .sources-container img {
-            width: 100%; border-radius: 10px; transition: transform 0.3s ease;
-        }
-        .bullet-points-container ul, .sources-container ul {
-            list-style-type: disc; padding-left: 20px;
-        }
-        .bullet-points-container li, .sources-container li {
-            margin-bottom: 0.5rem; font-size: 1.2rem;
-        }
-        .bullet-points-container:hover, .sources-container:hover {
-            transform: translateY(-10px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-        }
-        body.dark-mode .sources-container li::before { color: #82aaff; }
-        #back-to-top {
-            position: fixed; bottom: 40px; right: 40px; background-color: #007BFF; color: #fff;
-            border: none; border-radius: 50%; padding: 10px 15px; cursor: pointer;
-            display: none; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); transition: background-color 0.3s;
-        }
-        #back-to-top:hover { background-color: #0056b3; }
-        body.dark-mode #back-to-top { background-color: #569cd6; }
-        body.dark-mode #back-to-top:hover { background-color: #3e8acd; }
-        footer {
-            text-align: center; padding: 2rem 0; background-color: #f5f5f5; color: #333;
-            transition: background-color 0.5s, color 0.5s;
-        }
-        body.dark-mode footer { background-color: #333; color: #f5f5f5; }
-        .fullscreen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #fff; z-index: 2000; display: none; flex-direction: column;
-            justify-content: center; align-items: center; padding: 2rem; overflow-y: auto;
-        }
-        body.dark-mode .fullscreen { background-color: #121212; }
-        .fullscreen.visible { display: flex; animation: fadeIn 0.5s; }
-        .fullscreen.exiting { animation: fadeOut 0.5s forwards; }
-        .fullscreen .content {
-            display: flex; justify-content: space-between; align-items: center;
-            width: 100%; max-width: 1200px; transform: translateX(100%);
-            animation: slideIn 0.5s forwards;
-        }
-        .fullscreen .content h2 { flex: 1; font-size: 2rem; }
-        .fullscreen .content ul { list-style-type: disc; padding-left: 20px; flex: 1; margin-right: 2rem; }
-        .fullscreen .content img {
-            max-width: 40%; border-radius: 10px; flex: 1;
-            transform: translateY(50px); opacity: 0; animation: imageSlideIn 0.5s forwards;
-            animation-delay: 0.3s;
-        }
-        .fullscreen .buttons {
-            display: flex; justify-content: center; width: 100%; margin-top: 2rem;
-        }
-        .fullscreen .buttons .btn {
-            background-color: #007BFF; color: #fff; padding: 1rem 2rem; border: none;
-            border-radius: 5px; cursor: pointer; margin: 0.5rem;
-            font-size: 1.2rem; transition: background-color 0.3s;
-        }
-        .fullscreen .buttons .btn:hover { background-color: #0056b3; transform: scale(1.05); }
-        body.dark-mode .fullscreen .buttons .btn { background-color: #569cd6; }
-        body.dark-mode .fullscreen .buttons .btn:hover { background-color: #3e8acd; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-        @keyframes imageSlideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="loader"><div class="spinner"></div></div>
+
     <nav id="navbar">
         <div class="container">
             <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
             <ul class="nav-menu">
-                <li><a href="#" class="logo">Internet als Religion</a></li>
+                <li><a href="#" class="logo">Oberbegriff</a></li>
                 <li><a href="#bullet-points-1" class="nav-link">Präsentation</a></li>
                 <li><a href="#sources" class="nav-link">Quellen</a></li>
                 <li><a href="javascript:void(0)" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
             </ul>
         </div>
     </nav>
+
     <section class="hero">
         <div class="container">
-            <h1>Internet als Religion</h1>
+            <h1>Willkommen zur Präsentation</h1>
         </div>
     </section>
+
     <main class="container">
-        <section id="bullet-points-1" class="bullet-points-container fade-in">
-            <div>
-                <h2>Increase in Internet Usage in Germany</h2>
-                <ul>
-                    <li>58 million Germans were online in 2016.</li>
-                    <li>84% of Germans aged 14 and older use the internet.</li>
-                    <li>Internet users increased by 2 million.</li>
-                    <li>Most use their smartphones to go online.</li>
-                    <li>65% use the internet daily.</li>
-                </ul>
-            </div>
-            <img src="IMG_4237.jpeg" alt="Bild zu Thema 1">
-        </section>
-        <section id="bullet-points-2" class="bullet-points-container fade-in">
-            <div>
-                <h2>Mobile Internet Use and Age Differences</h2>
-                <ul>
-                    <li>28% use the internet on mobile devices daily.</li>
-                    <li>64% of people under 30 use mobile internet.</li>
-                    <li>Traditional TV is less popular now.</li>
-                    <li>Young people prefer watching videos on mobile devices.</li>
-                </ul>
-            </div>
-            <img src="IMG_4238.png" alt="Bild zu Thema 2">
-        </section>
-        <section id="bullet-points-3" class="bullet-points-container fade-in">
-            <div>
-                <h2>Internet Use and Time Spent Online</h2>
-                <ul>
-                    <li>Germans spend an average of 2 hours and 8 minutes online daily.</li>
-                    <li>This has increased by 20 minutes from the previous year.</li>
-                    <li>Mobile users spend 2 hours and 43 minutes online.</li>
-                    <li>39% of online time is for communication, 25% for media.</li>
-                </ul>
-            </div>
-            <img src="IMG_4239.jpeg" alt="Bild zu Thema 3">
-        </section>
-        <section id="bullet-points-4" class="bullet-points-container fade-in">
-            <div>
-                <h2>Changes in Media Consumption</h2>
-                <ul>
-                    <li>Traditional TV is still most common but declining among the young.</li>
-                    <li>Young people favor online videos.</li>
-                    <li>ZDF updated its media library to attract younger viewers.</li>
-                    <li>14- to 29-year-olds are leading the rise in online video use.</li>
-                </ul>
-            </div>
-            <img src="IMG_4240.jpeg" alt="Bild zu Thema 4">
-        </section>
+        <!-- Inhalte und Abschnitte hier einfügen -->
     </main>
-    <button id="back-to-top" title="Nach oben">⬆️</button>
-    <div id="fullscreen-modal" class="fullscreen">
-        <div class="content">
-            <div>
-                <h2></h2>
-                <ul></ul>
-            </div>
-            <img src="" alt="Vollbild Bild">
-        </div>
-        <div class="buttons">
-            <button class="btn close-btn">Zurück</button>
-            <button class="btn next-btn">Nächste</button>
-        </div>
-    </div>
+
     <footer>
         <p><a href="#">Impressum</a> • <a href="#">Datenschutz</a></p>
         <p>Pauwe</p>
     </footer>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('dark-mode-toggle').addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
-                const icon = document.querySelector('#dark-mode-toggle i');
-                icon.classList.toggle('fa-moon');
-                icon.classList.toggle('fa-sun');
-            });
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                const current = [...sections].find(section => window.scrollY >= section.offsetTop - 70)?.id || '';
-                navLinks.forEach(link => {
-                    link.classList.toggle('active', link.getAttribute('href').includes(current));
-                });
-                navbar.classList.toggle('scrolled', window.scrollY > 50);
-            });
-            document.querySelectorAll('a.nav-link').forEach(anchor => {
-                anchor.addEventListener('click', e => {
-                    e.preventDefault();
-                    document.querySelector(anchor.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-                });
-            });
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => entry.target.classList.toggle('visible', entry.isIntersecting));
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.bullet-points-container, .fade-in').forEach(section => observer.observe(section));
-            const backToTopButton = document.getElementById('back-to-top');
-            window.addEventListener('scroll', () => {
-                backToTopButton.style.display = window.scrollY > 300 ? 'block' : 'none';
-            });
-            backToTopButton.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-            let currentPointIndex = 0;
-            const bulletPoints = document.querySelectorAll('.bullet-points-container');
-            const fullscreenModal = document.getElementById('fullscreen-modal');
-            const closeBtn = fullscreenModal.querySelector('.close-btn');
-            const nextBtn = fullscreenModal.querySelector('.next-btn');
-            bulletPoints.forEach((bullet, index) => {
-                bullet.addEventListener('click', () => showFullscreen(index));
-            });
-            closeBtn.addEventListener('click', hideFullscreen);
-            nextBtn.addEventListener('click', () => showFullscreen((currentPointIndex + 1) % bulletPoints.length));
-            function showFullscreen(index) {
-                currentPointIndex = index;
-                const bullet = bulletPoints[index];
-                fullscreenModal.querySelector('h2').textContent = bullet.querySelector('h2').textContent;
-                fullscreenModal.querySelector('ul').innerHTML = bullet.querySelector('ul').innerHTML;
-                fullscreenModal.querySelector('img').src = bullet.querySelector('img').src;
-                fullscreenModal.classList.add('visible');
-            }
-            function hideFullscreen() {
-                fullscreenModal.classList.remove('visible');
-                fullscreenModal.classList.add('exiting');
-                setTimeout(() => fullscreenModal.classList.remove('exiting'), 500);
-            }
-        });
-    </script>
+
+    <script src="script.js"></script>
 </body>
 </html>
