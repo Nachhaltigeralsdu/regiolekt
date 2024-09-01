@@ -47,7 +47,7 @@ body.dark-mode nav ul li a:hover, body.dark-mode nav ul li a.active { background
     .menu-icon.active + .nav-menu { display: flex; }
 }
 .hero {
-    height: 100vh; background: url(Cover_der_presentation) no-repeat center center/cover;
+    height: 100vh; background: url(IMG_4246.jpeg) no-repeat center center/cover;
     display: flex; justify-content: center; align-items: center; color: #fff; text-align: center;
     flex-direction: column; padding-top: 5rem; position: relative; overflow: hidden;
 }
