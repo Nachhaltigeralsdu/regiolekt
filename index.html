@@ -2,307 +2,966 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <!-- Responsives Design für mobile Geräte -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Internet als Religion</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Präsentationsvorlage</title>
+    <!-- Einbindung der Schriftart 'Roboto' von Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* CSS-Variablen für die Text- und Placeholder-Farbe */
+        :root {
+            --text-color: #000; /* Standardfarbe, wird durch JavaScript angepasst */
+            --placeholder-color: rgba(0, 0, 0, 0.5); /* Standard Placeholder-Farbe */
+        }
+
+        /* Box-Sizing global setzen */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* Grundlegende Stile für den Body */
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-            transition: background-color 0.5s, color 0.5s;
+            background: #f4f6f9;
+            color: var(--text-color);
             overflow-x: hidden;
+            scroll-behavior: smooth;
+            /* Übergangseffekt für Hintergrundfarbe und Textfarbe */
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
-        body.dark-mode { background-color: #121212; color: #f5f5f5; }
-        h1, h2, h3, h4 { margin: 0.5rem 0; }
-        h1 { font-size: 6vw; color: #fff; transition: color 0.5s; }
-        body.dark-mode h1 { color: #fff; }
-        a { text-decoration: none; color: #007BFF; transition: color 0.3s; }
-        body.dark-mode a { color: #82aaff; }
-        a:hover { color: #0056b3; }
-        body.dark-mode a:hover { color: #569cd6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 2vh 5vw; }
-        nav {
-            background-color: rgba(255, 255, 255, 0.135); color: #fff; padding: 1rem 0;
-            position: fixed; width: 100%; top: 0; z-index: 1000; transition: background-color 0.5s, color 0.5s;
-            backdrop-filter: blur(5px);
+
+        /* Stile für alle textbezogenen Elemente */
+        body, h1, h2, h3, p, a, button, label, input, textarea, select {
+            color: var(--text-color);
         }
-        nav a { color: #fff; } /* Navbar-Schrift immer weiß */
-        body.dark-mode nav { background-color: rgba(18, 18, 18, 0.8); }
-        nav.scrolled { background-color: rgba(51, 51, 51, 0.8); color: #fff; }
-        nav ul { display: flex; justify-content: space-between; align-items: center; margin: 0; padding: 0; list-style: none; }
-        nav ul li { margin: 0 1rem; }
-        nav ul li a { padding: 0.5rem 1rem; border-radius: 5px; transition: background-color 0.3s, color 0.3s; }
-        nav ul li a:hover, nav ul li a.active { background-color: #007BFF; color: #fff; }
-        body.dark-mode nav ul li a:hover, body.dark-mode nav ul li a.active { background-color: #569cd6; }
-        .menu-icon { display: none; font-size: 1.8rem; cursor: pointer; }
-        .menu-icon.active + .nav-menu { display: block; }
-        .nav-menu { display: flex; }
-        @media (max-width: 768px) {
-            .menu-icon { display: block; }
-            .nav-menu {
-                display: none; flex-direction: column; background-color: rgba(255, 255, 255, 0.9);
-                position: absolute; top: 60px; right: 0; width: 200px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            }
-            body.dark-mode .nav-menu { background-color: rgba(18, 18, 18, 0.9); }
-            nav ul { flex-direction: column; }
-            nav ul li { margin: 0.5rem 0; }
-            nav ul li a { padding: 1rem; }
-            .menu-icon.active + .nav-menu { display: flex; }
+
+        /* Placeholder-Textfarbe */
+        ::placeholder {
+            color: var(--placeholder-color);
+            opacity: 1; /* Stelle sicher, dass die Opazität aus der Variable kommt */
         }
+
+        /* Stile für die Navigationsleiste */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem; /* Einheitliches Padding */
+            background: rgba(34, 34, 34, 0.121);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem; /* Reduziertes Gap für bessere Mobilität */
+            margin: 0;
+            padding: 0;
+        }
+        .navbar li {
+            position: relative;
+        }
+        .navbar a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .navbar a:hover {
+            color: #007bff;
+            transform: scale(1.1);
+        }
+
+        /* Stile für den Hero-Bereich */
         .hero {
-            height: 100vh; background: url(IMG_4237.jpeg) no-repeat center center/cover;
-            display: flex; justify-content: center; align-items: center; color: #fff; text-align: center;
-            flex-direction: column; padding-top: 5rem; position: relative; overflow: hidden;
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .hero h1 { font-size: 3rem; margin-bottom: 1rem; animation: fadeInDown 2s ease-in-out; }
-        .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto; animation: fadeInUp 2s ease-in-out; }
-        body.dark-mode .hero { background-color: #333; }
-        .hero::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: inherit;
-            background-attachment: fixed; z-index: -1; transform: scale(1.1); filter: blur(5px); opacity: 0.7;
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+            animation: fadeIn 2s;
         }
-        @keyframes fadeInDown { 0% { opacity: 0; transform: translateY(-20px); } 100% { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
-        main { padding: 4rem 0; }
-        section { margin-bottom: 4rem; }
-        section h2 {
-            margin-bottom: 1rem; position: relative; overflow: hidden;
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            animation: slideInDown 1s;
         }
-        section h2::after {
-            content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 4px; background: #007BFF;
-            transition: width 0.4s ease-in-out;
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            animation: slideInUp 1s;
         }
-        section h2:hover::after { width: 100%; }
-        section p { font-size: 1rem; margin-bottom: 1.5rem; }
-        body.dark-mode section p { color: #ddd; }
-        .bullet-points-container, .sources-container {
-            background-color: #fff; padding: 2rem; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;
-            opacity: 0; transform: translateX(-50px); transition: opacity 0.5s, transform 0.5s;
+
+        /* Hauptinhalt */
+        .main-content {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            transition: transform 0.3s, opacity 0.3s;
         }
-        .bullet-points-container.visible, .sources-container.visible { opacity: 1; transform: translateX(0); }
-        body.dark-mode .bullet-points-container, body.dark-mode .sources-container { background-color: #1e1e1e; }
-        body.dark-mode .bullet-points-container ul, body.dark-mode .sources-container ul { color: #ddd; }
-        .bullet-points-container img, .sources-container img {
-            width: 100%; border-radius: 10px; transition: transform 0.3s ease;
+
+        /* Formular zum Erstellen von Folien */
+        .slide-form {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            padding: 2rem; /* Einheitliches Padding */
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s;
+            transition: transform 0.3s;
         }
-        .bullet-points-container ul, .sources-container ul {
-            list-style-type: disc; padding-left: 20px;
+        .slide-form input,
+        .slide-form textarea,
+        .slide-form select {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background: transparent;
+            backdrop-filter: blur(30px);
+            /* Entferne den Schatten */
+            box-shadow: none;
+            color: var(--text-color);
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        .bullet-points-container li, .sources-container li {
-            margin-bottom: 0.5rem; font-size: 1.2rem;
+        .slide-form input:focus,
+        .slide-form textarea:focus,
+        .slide-form select:focus {
+            border-color: #3b82f6;
+            /* Optional: Füge einen leicht sichtbaren Fokus-Effekt hinzu */
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
         }
-        .bullet-points-container:hover, .sources-container:hover {
-            transform: translateY(-10px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+
+        /* Stile für Buttons */
+        .slide-form button,
+        .presentation-controls button,
+        .code-container button,
+        .edit-button,
+        .delete-button,
+        .move-up-button,
+        .move-down-button {
+            padding: 0.5rem 1.2rem;
+            background: transparent;
+            color: var(--text-color);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, backdrop-filter 0.3s;
+            margin-right: 0.5rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
-        body.dark-mode .sources-container li::before { color: #82aaff; }
-        #back-to-top {
-            position: fixed; bottom: 40px; right: 40px; background-color: #007BFF; color: #fff;
-            border: none; border-radius: 50%; padding: 10px 15px; cursor: pointer;
-            display: none; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); transition: background-color 0.3s;
+        .slide-form button:hover,
+        .presentation-controls button:hover,
+        .code-container button:hover,
+        .edit-button:hover,
+        .delete-button:hover,
+        .move-up-button:hover,
+        .move-down-button:hover {
+            background: rgba(0, 123, 255, 0.2); /* Leicht transparente Hintergrundfarbe beim Hover */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
-        #back-to-top:hover { background-color: #0056b3; }
-        body.dark-mode #back-to-top { background-color: #569cd6; }
-        body.dark-mode #back-to-top:hover { background-color: #3e8acd; }
-        footer {
-            text-align: center; padding: 2rem 0; background-color: #f5f5f5; color: #333;
-            transition: background-color 0.5s, color 0.5s;
+        .slide-form button:focus,
+        .presentation-controls button:focus,
+        .code-container button:focus,
+        .edit-button:focus,
+        .delete-button:focus,
+        .move-up-button:focus,
+        .move-down-button:focus {
+            outline: none;
+            box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
         }
-        body.dark-mode footer { background-color: #333; color: #f5f5f5; }
-        .fullscreen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #fff; z-index: 2000; display: none; flex-direction: column;
-            justify-content: center; align-items: center; padding: 2rem; overflow-y: auto;
+
+        /* Container für einzelne Folien */
+        .slide-container {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1.5rem;
+            padding: 2rem; /* Einheitliches Padding */
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s;
+            transition: transform 0.3s, opacity 0.3s;
         }
-        body.dark-mode .fullscreen { background-color: #121212; }
-        .fullscreen.visible { display: flex; animation: fadeIn 0.5s; }
-        .fullscreen.exiting { animation: fadeOut 0.5s forwards; }
-        .fullscreen .content {
-            display: flex; justify-content: space-between; align-items: center;
-            width: 100%; max-width: 1200px; transform: translateX(100%);
-            animation: slideIn 0.5s forwards;
+        .slide-container h2 {
+            font-size: 1.5rem;
+            margin: 0 0 1rem;
         }
-        .fullscreen .content h2 { flex: 1; font-size: 2rem; }
-        .fullscreen .content ul { list-style-type: disc; padding-left: 20px; flex: 1; margin-right: 2rem; }
-        .fullscreen .content img {
-            max-width: 40%; border-radius: 10px; flex: 1;
-            transform: translateY(50px); opacity: 0; animation: imageSlideIn 0.5s forwards;
-            animation-delay: 0.3s;
+        .slide-container img,
+        .slide-container iframe {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            margin-bottom: 1.5rem;
         }
-        .fullscreen .buttons {
-            display: flex; justify-content: center; width: 100%; margin-top: 2rem;
+        .slide-container img:hover,
+        .slide-container iframe:hover {
+            transform: scale(1.05);
         }
-        .fullscreen .buttons .btn {
-            background-color: #007BFF; color: #fff; padding: 1rem 2rem; border: none;
-            border-radius: 5px; cursor: pointer; margin: 0.5rem;
-            font-size: 1.2rem; transition: background-color 0.3s;
+
+        /* Deckblatt der Präsentation */
+        .presentation-cover {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1s;
         }
-        .fullscreen .buttons .btn:hover { background-color: #0056b3; transform: scale(1.05); }
-        body.dark-mode .fullscreen .buttons .btn { background-color: #569cd6; }
-        body.dark-mode .fullscreen .buttons .btn:hover { background-color: #3e8acd; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-        @keyframes imageSlideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .presentation-cover:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .presentation-cover h2 {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        .presentation-cover img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+        .presentation-cover img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Präsentationsmodus */
+        .presentation-mode {
+            display: none; /* Präsentationsmodus ist standardmäßig versteckt */
+            position: fixed; /* Positioniert das Element relativ zum Browserfenster */
+            top: 0;
+            left: 0;
+            width: 100%; /* Nimmt die gesamte Breite ein */
+            height: 100%; /* Nimmt die gesamte Höhe ein */
+            background: var(--background-color, #fff); /* Hintergrundfarbe, Standard weiß */
+            color: var(--text-color); /* Textfarbe */
+            z-index: 9999; /* Hoher z-index, um über anderen Elementen zu liegen */
+            justify-content: center; /* Zentriert Inhalte horizontal */
+            align-items: center; /* Zentriert Inhalte vertikal */
+            flex-direction: column; /* Ordnet Kinder im Spaltenlayout an */
+            padding: 2rem; /* Innenabstand */
+            animation: fadeIn 0.5s; /* Einblendeanimation */
+            transition: background-color 0.3s, color 0.3s; /* Übergangseffekt bei Hintergrundfarben- und Schriftfarbenänderung */
+        }
+        .presentation-slide {
+            max-width: 95%; /* Maximale Breite der Folie */
+            max-height: 95%; /* Maximale Höhe der Folie */
+            text-align: left; /* Text linksbündig */
+            display: flex; /* Flexbox für Layout */
+            flex-direction: column; /* Ordnet Inhalte vertikal an */
+            align-items: center; /* Zentriert Inhalte horizontal */
+            justify-content: center; /* Zentriert Inhalte vertikal */
+            animation: slideInRight 0.6s; /* Folie kommt von rechts herein */
+            margin-bottom: 10rem; /* Abstand nach unten */
+        }
+        .presentation-slide h2 {
+            font-size: 3.5rem; /* Große Überschrift */
+            margin-bottom: 1.7rem; /* Abstand nach unten */
+            text-align: center; /* Zentrierter Text */
+        }
+        .presentation-slide ul {
+            list-style-position: inside; /* Listenpunkte innerhalb des Elements */
+            padding-left: 1.5rem; /* Innenabstand links */
+            margin-top: 1rem; /* Abstand nach oben */
+            font-size: 1.8rem; /* Schriftgröße der Liste */
+        }
+        .presentation-slide p {
+            font-size: 2rem; /* Schriftgröße des Textes */
+            line-height: 1.5; /* Zeilenhöhe */
+            margin-top: 1rem; /* Abstand nach oben */
+            text-align: center; /* Zentrierter Text */
+            width: 80%; /* Breite des Textblocks */
+        }
+        .presentation-slide img,
+        .presentation-slide iframe,
+        .presentation-slide video {
+            max-width: 100%; /* Bilder und Medien füllen maximale Breite */
+            max-height: 70vh; /* Maximale Höhe in Bezug auf Viewport-Höhe */
+            border-radius: 8px; /* Abgerundete Ecken */
+            margin-bottom: 1rem; /* Abstand nach unten */
+            transition: transform 0.3s; /* Übergangseffekt bei Transformation */
+        }
+        .presentation-slide img:hover,
+        .presentation-slide iframe:hover,
+        .presentation-slide video:hover {
+            transform: scale(1.05); /* Vergrößerung beim Hover */
+        }
+        .presentation-slide .content-wrapper {
+            display: flex; /* Flexbox für nebeneinander liegende Inhalte */
+            align-items: center; /* Vertikale Ausrichtung zentriert */
+            justify-content: center; /* Horizontale Ausrichtung zentriert */
+            width: 100%; /* Nimmt die gesamte Breite ein */
+        }
+        .presentation-slide .content-wrapper > div {
+            flex: 1; /* Teilt den verfügbaren Platz gleichmäßig */
+            padding: 1rem; /* Innenabstand */
+        }
+        .presentation-slide .content-wrapper img {
+            max-width: 100%; /* Bild füllt den verfügbaren Platz */
+            height: auto; /* Höhe passt sich proportional an */
+        }
+
+        /* Stile für Präsentationssteuerungen */
+        .presentation-controls {
+            position: absolute; /* Positioniert relativ zum nächsten nicht-statischen Vorfahren */
+            bottom: 80px; /* Abstand vom unteren Rand des Präsentationsmodus */
+            width: 100%; /* Nimmt die gesamte Breite ein */
+            display: flex; /* Flexbox für die Buttons */
+            justify-content: center; /* Zentriert die Buttons horizontal */
+            gap: 2rem; /* Abstand zwischen den Buttons */
+        }
+        .presentation-controls button {
+            font-size: 1rem; /* Schriftgröße der Buttons */
+        }
+
+        /* Container für Codeexport/-import */
+        .code-container {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            padding: 2rem; /* Einheitliches Padding */
+            border-radius: 8px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s;
+        }
+        .code-container textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 1rem;
+            font-family: monospace;
+            resize: none;
+            background: transparent;
+            backdrop-filter: blur(30px);
+            /* Entferne den Schatten */
+            box-shadow: none;
+            color: var(--text-color);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .code-container textarea:focus {
+            border-color: #3b82f6;
+            /* Optional: Füge einen leicht sichtbaren Fokus-Effekt hinzu */
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Stile für die Design-Einstellungen */
+        .design-settings {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            padding: 2rem; /* Einheitliches Padding */
+            margin-top: 2rem;
+            border-radius: 8px;
+            animation: fadeInUp 1s;
+        }
+        .design-settings h2 {
+            margin-bottom: 1rem;
+        }
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .color-picker-wrapper label {
+            font-weight: bold;
+        }
+        .color-picker-wrapper input[type="color"] {
+            width: 40px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            background: none;
+        }
+
+        /* Animationen */
+        @keyframes fadeIn {
+            from { opacity: 0 }
+            to { opacity: 1 }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px) }
+            to { opacity: 1; transform: translateY(0) }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100%) }
+            to { opacity: 1; transform: translateX(0) }
+        }
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-100%) }
+            to { opacity: 1; transform: translateY(0) }
+        }
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(100%) }
+            to { opacity: 1; transform: translateY(0) }
+        }
+
+        /* Responsives Design für kleinere Bildschirme */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            .navbar ul {
+                gap: 1rem;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+            .presentation-slide h2 {
+                font-size: 2rem;
+            }
+            .presentation-slide ul,
+            .presentation-slide p {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div id="loader"><div class="spinner"></div></div>
-    <nav id="navbar">
-        <div class="container">
-            <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
-            <ul class="nav-menu">
-                <li><a href="#" class="logo">Internet als Religion</a></li>
-                <li><a href="#bullet-points-1" class="nav-link">Präsentation</a></li>
-                <li><a href="#sources" class="nav-link">Quellen</a></li>
-                <li><a href="javascript:void(0)" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
-            </ul>
-        </div>
-    </nav>
-    <section class="hero">
-        <div class="container">
-            <h1>Internet als Religion</h1>
+    <!-- Navigationsleiste -->
+    <div class="navbar">
+        <ul>
+            <li><a href="#hero-section" onclick="smoothScroll('#hero-section')">Willkommen</a></li>
+            <li><a href="#slideForm" onclick="smoothScroll('#slideForm')">Neue Folie</a></li>
+            <li><a href="#codeContainer" onclick="smoothScroll('#codeContainer')">Code anzeigen</a></li>
+            <li><a href="#presentation-cover" onclick="smoothScroll('#presentation-cover')">Vorstellung</a></li>
+        </ul>
+    </div>
+    <!-- Hero-Bereich mit Hintergrundbild -->
+    <section class="hero" id="hero-section" style="background-image: url('https://via.placeholder.com/1600x900');">
+        <div class="hero-content">
+            <h1>Willkommen zu der Präsentation</h1>
         </div>
     </section>
-    <main class="container">
-        <section id="bullet-points-1" class="bullet-points-container fade-in">
-            <div>
-                <h2>Increase in Internet Usage in Germany</h2>
-                <ul>
-                    <li>58 million Germans were online in 2016.</li>
-                    <li>84% of Germans aged 14 and older use the internet.</li>
-                    <li>Internet users increased by 2 million.</li>
-                    <li>Most use their smartphones to go online.</li>
-                    <li>65% use the internet daily.</li>
-                </ul>
-            </div>
-            <img src="IMG_4238.jpeg" alt="Bild zu Thema 1">
-        </section>
-        <section id="bullet-points-2" class="bullet-points-container fade-in">
-            <div>
-                <h2>Mobile Internet Use and Age Differences</h2>
-                <ul>
-                    <li>28% use the internet on mobile devices daily.</li>
-                    <li>64% of people under 30 use mobile internet.</li>
-                    <li>Traditional TV is less popular now.</li>
-                    <li>Young people prefer watching videos on mobile devices.</li>
-                </ul>
-            </div>
-            <img src="IMG_4239.jpeg" alt="Bild zu Thema 2">
-        </section>
-        <section id="bullet-points-3" class="bullet-points-container fade-in">
-            <div>
-                <h2>Internet Use and Time Spent Online</h2>
-                <ul>
-                    <li>Germans spend an average of 2 hours and 8 minutes online daily.</li>
-                    <li>This has increased by 20 minutes from the previous year.</li>
-                    <li>Mobile users spend 2 hours and 43 minutes online.</li>
-                    <li>39% of online time is for communication, 25% for media.</li>
-                </ul>
-            </div>
-            <img src="IMG_4240.jpeg" alt="Bild zu Thema 3">
-        </section>
-        <section id="bullet-points-4" class="bullet-points-container fade-in">
-            <div>
-                <h2>Changes in Media Consumption</h2>
-                <ul>
-                    <li>Traditional TV is still most common but declining among the young.</li>
-                    <li>Young people favor online videos.</li>
-                    <li>ZDF updated its media library to attract younger viewers.</li>
-                    <li>14- to 29-year-olds are leading the rise in online video use.</li>
-                </ul>
-            </div>
-            <img src="Bild4" alt="Bild zu Thema 4">
-        </section>
-        <section id="IMG_4246.jpeg" class="sources-container fade-in">
-            <h2>Sources</h2>
-            <ul>
-                English class paper 
-            </ul>
-        </section>
-    </main>
-    <button id="back-to-top" title="Nach oben">⬆️</button>
-    <div id="fullscreen-modal" class="fullscreen">
-        <div class="content">
-            <div>
-                <h2></h2>
-                <ul></ul>
-            </div>
-            <img src="" alt="Vollbild Bild">
+    <div class="main-content">
+        <!-- Formular zum Hochladen eines Hero-Bildes -->
+        <div class="slide-form" id="heroImageForm">
+            <h2>Willkommensbild hochladen</h2>
+            <input type="text" id="hero-image-url" placeholder="Bild-URL für Willkommensbereich eingeben">
+            <button type="button" onclick="setHeroImage()">Bild setzen</button>
         </div>
-        <div class="buttons">
-            <button class="btn close-btn">Zurück</button>
-            <button class="btn next-btn">Nächste</button>
+        <!-- Formular zum Bearbeiten des Willkommens-Titels -->
+        <div class="slide-form" id="heroHeadingForm">
+            <h2>Willkommenstitel bearbeiten</h2>
+            <input type="text" id="hero-heading-text" placeholder="Überschrift für den Willkommensbereich eingeben">
+            <button type="button" onclick="setHeroHeading()">Titel setzen</button>
+        </div>
+        <!-- Formular zum Erstellen oder Bearbeiten einer Folie -->
+        <div class="slide-form" id="slideForm">
+            <h2>Neue Folie erstellen / bearbeiten</h2>
+            <select id="slide-type">
+                <option value="text">Text</option>
+                <option value="image-left-bullets-right">Bild rechts & Stichpunkte links</option>
+                <option value="image-only">Nur Bild</option>
+                <option value="checklist">Checkliste</option>
+                <option value="outline">Gliederungsfolie</option>
+                <option value="sources">Quellenfolie</option>
+                <option value="closing">Abschiedsfolie</option>
+                <option value="media">Video / Audio</option>
+            </select>
+            <input type="text" id="slide-title" placeholder="Titel">
+            <textarea id="slide-content" placeholder="Inhalt (für Stichpunkte oder Checkliste: einen pro Zeile)"></textarea>
+            <input type="text" id="slide-image" placeholder="Bild-/Medien-URL (optional)">
+            <button type="button" onclick="addSlide()">Folie hinzufügen</button>
+            <button type="button" onclick="saveSlide()" style="display: none;" id="save-slide-btn">Änderungen speichern</button>
+        </div>
+        <!-- Container für hinzugefügte Folien -->
+        <div id="presentation-container"></div>
+        <!-- Bereich zum Exportieren und Importieren des Präsentationscodes -->
+        <div class="code-container" id="codeContainer">
+            <h2>Präsentationscode</h2>
+            <textarea id="presentation-code" readonly></textarea>
+            <button onclick="generatePresentationCode()">Code generieren</button>
+            <button onclick="copyToClipboard()">Kopieren</button>
+            <textarea id="import-code" placeholder="Code zum Importieren hier einfügen"></textarea>
+            <button onclick="importPresentationCode()">Code importieren</button>
+            <button onclick="pasteFromClipboard()">Einfügen</button>
+        </div>
+        <!-- Formular zum Setzen des Deckblattbildes -->
+        <div class="slide-form" id="coverImageForm">
+            <h2>Deckblatt-Bildlink</h2>
+            <input type="text" id="cover-image-url" placeholder="Bild-URL für Deckblatt eingeben">
+            <button type="button" onclick="setCoverImage()">Deckblatt setzen</button>
+        </div>
+        <!-- Neue Sektion für Design-Einstellungen -->
+        <div class="design-settings">
+            <h2>Design-Einstellungen</h2>
+            <div class="color-picker-wrapper">
+                <label for="background-color-picker">Hintergrundfarbe wählen:</label>
+                <input type="color" id="background-color-picker" value="#f4f6f9">
+            </div>
+        </div>
+        <!-- Deckblatt der Präsentation -->
+        <div class="presentation-cover" id="presentation-cover" onclick="startPresentation()">
+            <h2>Meine Präsentation</h2>
+            <img src="https://via.placeholder.com/400x300?text=Deckblatt" id="cover-image" alt="Cover der Präsentation">
+            <p>Klicken Sie hier, um die Präsentation zu starten.</p>
         </div>
     </div>
-    <footer>
-        <p><a href="#">Impressum</a> • <a href="#">Datenschutz</a></p>
-        <p>Pauwe</p>
-    </footer>
+    <!-- Präsentationsmodus -->
+    <div class="presentation-mode" id="presentation-mode">
+        <div class="presentation-slide" id="presentation-slide"></div>
+        <div class="presentation-controls">
+            <button onclick="previousSlide()">Zurück</button>
+            <button onclick="nextSlide()">Weiter</button>
+            <button onclick="exitPresentation()">Verlassen</button>
+        </div>
+    </div>
+    <!-- JavaScript-Code zur Steuerung der Präsentation -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('dark-mode-toggle').addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
-                const icon = document.querySelector('#dark-mode-toggle i');
-                icon.classList.toggle('fa-moon');
-                icon.classList.toggle('fa-sun');
-            });
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                const current = [...sections].find(section => window.scrollY >= section.offsetTop - 70)?.id || '';
-                navLinks.forEach(link => {
-                    link.classList.toggle('active', link.getAttribute('href').includes(current));
-                });
-                navbar.classList.toggle('scrolled', window.scrollY > 50);
-            });
-            document.querySelectorAll('a.nav-link').forEach(anchor => {
-                anchor.addEventListener('click', e => {
-                    e.preventDefault();
-                    document.querySelector(anchor.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-                });
-            });
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => entry.target.classList.toggle('visible', entry.isIntersecting));
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.bullet-points-container, .fade-in').forEach(section => observer.observe(section));
-            const backToTopButton = document.getElementById('back-to-top');
-            window.addEventListener('scroll', () => {
-                backToTopButton.style.display = window.scrollY > 300 ? 'block' : 'none';
-            });
-            backToTopButton.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-            let currentPointIndex = 0;
-            const bulletPoints = document.querySelectorAll('.bullet-points-container');
-            const fullscreenModal = document.getElementById('fullscreen-modal');
-            const closeBtn = fullscreenModal.querySelector('.close-btn');
-            const nextBtn = fullscreenModal.querySelector('.next-btn');
-            bulletPoints.forEach((bullet, index) => {
-                bullet.addEventListener('click', () => showFullscreen(index));
-            });
-            closeBtn.addEventListener('click', hideFullscreen);
-            nextBtn.addEventListener('click', () => showFullscreen((currentPointIndex + 1) % bulletPoints.length));
-            function showFullscreen(index) {
-                currentPointIndex = index;
-                const bullet = bulletPoints[index];
-                fullscreenModal.querySelector('h2').textContent = bullet.querySelector('h2').textContent;
-                fullscreenModal.querySelector('ul').innerHTML = bullet.querySelector('ul').innerHTML;
-                fullscreenModal.querySelector('img').src = bullet.querySelector('img').src;
-                fullscreenModal.classList.add('visible');
+        // Globale Variablen zur Verwaltung des aktuellen Bearbeitungszustands und der Folien
+        let currentEditingSlide = null,
+            currentSlideIndex = 0,
+            slides = [];
+        
+        // Neue Variablen für zusätzliche Einstellungen
+        let backgroundColor = '#f4f6f9',
+            heroImageUrl = '',
+            heroHeadingText = 'Willkommen zu der Präsentation',
+            coverImageUrl = '';
+
+        // Funktion zum Setzen des Hero-Bildes
+        function setHeroImage() {
+            const imageUrl = document.getElementById('hero-image-url').value;
+            if (imageUrl) {
+                heroImageUrl = imageUrl; // Speichern für Export
+                document.getElementById('hero-section').style.backgroundImage = `url('${imageUrl}')`;
             }
-            function hideFullscreen() {
-                fullscreenModal.classList.remove('visible');
-                fullscreenModal.classList.add('exiting');
-                setTimeout(() => fullscreenModal.classList.remove('exiting'), 500);
+        }
+
+        // Funktion zum Setzen des Hero-Headings
+        function setHeroHeading() {
+            const headingText = document.getElementById('hero-heading-text').value;
+            if (headingText) {
+                heroHeadingText = headingText; // Speichern für Export
+                document.querySelector('#hero-section .hero-content h1').textContent = headingText;
             }
-        });
+        }
+
+        // Funktion zum Setzen des Deckblattbildes
+        function setCoverImage() {
+            const imageUrl = document.getElementById('cover-image-url').value;
+            if (imageUrl) {
+                coverImageUrl = imageUrl; // Speichern für Export
+                document.getElementById('cover-image').src = imageUrl;
+            }
+        }
+
+        // Funktion zum Ändern der Hintergrundfarbe und Anpassung der Schriftfarbe
+        function changeBackgroundColor(event) {
+            const color = event.target.value;
+            backgroundColor = color; // Speichern für Export
+            document.body.style.backgroundColor = color;
+            document.documentElement.style.setProperty('--background-color', color);
+            adjustTextColor(color);
+        }
+
+        // Funktion zur Anpassung der Schriftfarbe basierend auf der Hintergrundfarbe
+        function adjustTextColor(hexColor) {
+            const rgb = hexToRgb(hexColor);
+            if (!rgb) return;
+            const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
+            const textColor = luminance > 0.5 ? '#000' : '#fff';
+            document.documentElement.style.setProperty('--text-color', textColor);
+            // Setze die Placeholder-Farbe entsprechend
+            const placeholderColor = luminance > 0.5 ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)';
+            document.documentElement.style.setProperty('--placeholder-color', placeholderColor);
+        }
+
+        // Hilfsfunktion zur Umwandlung von Hex in RGB
+        function hexToRgb(hex) {
+            // Entferne das führende #
+            hex = hex.replace('#', '');
+            // Unterstütze Kurz- und Langform
+            if (hex.length === 3) {
+                hex = hex.split('').map(char => char + char).join('');
+            }
+            if (hex.length !== 6) return null;
+            const bigint = parseInt(hex, 16);
+            const r = (bigint >> 16) & 255;
+            const g = (bigint >> 8) & 255;
+            const b = bigint & 255;
+            return { r, g, b };
+        }
+
+        // Event Listener für den Farbregler
+        document.getElementById('background-color-picker').addEventListener('input', changeBackgroundColor);
+
+        // Funktion zum Hinzufügen einer neuen Folie
+        function addSlide() {
+            const slideType = document.getElementById('slide-type').value,
+                slideTitle = document.getElementById('slide-title').value,
+                slideContent = document.getElementById('slide-content').value,
+                slideImage = document.getElementById('slide-image').value;
+
+            // Überprüfung, ob ein Titel erforderlich ist
+            if (!slideTitle && !['text', 'closing'].includes(slideType)) {
+                alert('Bitte einen Titel eingeben!');
+                return;
+            }
+
+            const presentationContainer = document.getElementById('presentation-container'),
+                slideContainer = document.createElement('div');
+
+            slideContainer.classList.add('slide-container');
+
+            let slideHTML = getSlideHTML(slideType, slideTitle, slideContent, slideImage);
+            slideContainer.innerHTML = slideHTML;
+
+            // Hinzufügen von Bearbeitungs-, Lösch- und Verschiebungsbuttons
+            addSlideControls(slideContainer, slideType, slideTitle, slideContent, slideImage);
+
+            presentationContainer.appendChild(slideContainer);
+            slides.push({ type: slideType, title: slideTitle, content: slideContent, image: slideImage });
+
+            clearForm();
+        }
+
+        // Funktion zum Generieren des HTML-Inhalts für eine Folie basierend auf ihrem Typ
+        function getSlideHTML(type, title, content, image, isPresentationMode = false) {
+            let slideHTML = '';
+            switch (type) {
+                case 'text':
+                    slideHTML = isPresentationMode ?
+                        `<div><h2>${title || ''}</h2><p>${content}</p></div>` :
+                        `<div><h2 style="font-size: 2rem; margin-bottom: 1rem;">${title || ''}</h2><p>${content}</p></div>`;
+                    break;
+                case 'image-left-bullets-right':
+                    const imagePoints = content.split('\n').map(point => `<li>${point}</li>`).join('');
+                    slideHTML = isPresentationMode ?
+                        `<div><h2>${title}</h2><div class="content-wrapper"><div style="flex: 1; padding: 1rem;"><ul style="list-style-position: inside; padding-left: 1.5rem; font-size: 1.8rem;">${imagePoints}</ul></div><div style="flex: 1; padding: 1rem;"><img src="${image}" alt="Bild"></div></div></div>` :
+                        `<div style="display: flex; flex-wrap: wrap; align-items: flex-start;"><div style="flex: 1; min-width: 250px; padding-right: 1rem;"><h2 style="font-size: 2rem; margin-bottom: 1rem;">${title}</h2><ul style="list-style-position: inside; padding-left: 1.5rem; margin-top: 1rem;">${imagePoints}</ul></div><div style="flex: 1; min-width: 250px; padding-left: 1rem;"><img src="${image}" alt="Bild" style="width: 100%; border-radius: 8px;"></div></div>`;
+                    break;
+                case 'image-only':
+                    slideHTML =
+                        `<div style="display: flex; flex-direction: column; align-items: center;"><h2>${title}</h2><img src="${image}" alt="Bild" style="margin-top: 1rem;"></div>`;
+                    break;
+                case 'checklist':
+                    const checklistItems = content.split('\n').map(item => `<li><input type="checkbox" style="margin-right: 0.5rem;">${item}</li>`).join('');
+                    slideHTML = isPresentationMode ?
+                        `<div style="display: flex; flex-direction: column; align-items: flex-start;"><h2>${title}</h2><ul style="list-style-type: none; padding-left: 0; margin-top: 1rem; font-size: 1.8rem;">${checklistItems}</ul></div>` :
+                        `<div style="display: flex; flex-direction: column; align-items: flex-start;"><h2 style="font-size: 2rem; margin-bottom: 1rem;">${title}</h2><ul style="list-style-type: none; padding-left: 0; margin-top: 1rem;">${checklistItems}</ul></div>`;
+                    break;
+                case 'outline':
+                    const outlinePoints = content.split('\n').map(point => `<li>${point}</li>`).join('');
+                    slideHTML = isPresentationMode ?
+                        `<div><h2>${title || 'Gliederung'}</h2><ul style="list-style-type: decimal; padding-left: 1.5rem; font-size: 1.8rem;">${outlinePoints}</ul></div>` :
+                        `<div><h2 style="font-size: 2rem; margin-bottom: 1rem;">${title || 'Gliederung'}</h2><ul style="list-style-type: decimal; padding-left: 1.5rem;">${outlinePoints}</ul></div>`;
+                    break;
+                case 'sources':
+                    const sourceList = content.split('\n').map((source, index) => `<li><a href="${source}" target="_blank">Link ${index + 1}</a></li>`).join('');
+                    slideHTML = isPresentationMode ?
+                        `<div><h2>${title || 'Quellen'}</h2><ul style="list-style-type: none; padding-left: 1.5rem; font-size: 1.8rem;">${sourceList}</ul></div>` :
+                        `<div><h2 style="font-size: 2rem; margin-bottom: 1rem;">${title || 'Quellen'}</h2><ul style="list-style-type: none; padding-left: 1.5rem;">${sourceList}</ul></div>`;
+                    break;
+                case 'closing':
+                    slideHTML = isPresentationMode ?
+                        `<div style="text-align: center;"><h2>${title || 'Vielen Dank für Ihre Aufmerksamkeit!'}</h2>${image ? `<img src="${image}" alt="Bild" style="margin-top: 1rem;">` : ''}</div>` :
+                        `<div style="text-align: center;"><h2 style="font-size: 2rem; margin-bottom: 1rem;">${title || 'Vielen Dank für Ihre Aufmerksamkeit!'}</h2>${image ? `<img src="${image}" alt="Bild" style="margin-top: 1rem; max-width: 100%; border-radius: 8px;">` : ''}</div>`;
+                    break;
+                case 'media':
+                    if (image.includes('youtube.com') || image.includes('youtu.be')) {
+                        let videoId = '';
+                        if (image.includes('youtube.com')) {
+                            videoId = new URL(image).searchParams.get('v');
+                        } else if (image.includes('youtu.be')) {
+                            videoId = image.split('/').pop();
+                        }
+                        const youtubeEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
+                        slideHTML =
+                            `<div style="display: flex; flex-direction: column; align-items: center;"><h2>${title}</h2><iframe src="${youtubeEmbedUrl}" frameborder="0" allowfullscreen style="margin-top: 1rem;"></iframe></div>`;
+                    } else {
+                        slideHTML =
+                            `<div style="display: flex; flex-direction: column; align-items: center;"><h2>${title}</h2><video src="${image}" controls style="margin-top: 1rem;"></video></div>`;
+                    }
+                    break;
+            }
+            return slideHTML;
+        }
+
+        // Funktion zum Hinzufügen von Bearbeitungs-, Lösch- und Verschiebungsbuttons zu einer Folie
+        function addSlideControls(slideContainer, type, title, content, image) {
+            const existingButtons = slideContainer.querySelectorAll('button');
+            existingButtons.forEach(button => button.remove());
+
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Bearbeiten';
+            editButton.className = 'edit-button';
+            editButton.onclick = () => {
+                editSlide(slideContainer, type, title, content, image);
+                smoothScroll('#slideForm');
+            };
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Löschen';
+            deleteButton.className = 'delete-button';
+            deleteButton.onclick = () => deleteSlide(slideContainer);
+
+            const moveUpButton = document.createElement('button');
+            moveUpButton.textContent = 'Nach oben';
+            moveUpButton.className = 'move-up-button';
+            moveUpButton.onclick = () => moveSlideUp(slideContainer);
+
+            const moveDownButton = document.createElement('button');
+            moveDownButton.textContent = 'Nach unten';
+            moveDownButton.className = 'move-down-button';
+            moveDownButton.onclick = () => moveSlideDown(slideContainer);
+
+            slideContainer.appendChild(editButton);
+            slideContainer.appendChild(deleteButton);
+            slideContainer.appendChild(moveUpButton);
+            slideContainer.appendChild(moveDownButton);
+        }
+
+        // Funktion zum Bearbeiten einer vorhandenen Folie
+        function editSlide(slideContainer, type, title, content, image) {
+            currentEditingSlide = slideContainer;
+            document.getElementById('slide-type').value = type;
+            document.getElementById('slide-title').value = title;
+            document.getElementById('slide-content').value = content;
+            document.getElementById('slide-image').value = image;
+            document.getElementById('save-slide-btn').style.display = 'block';
+        }
+
+        // Funktion zum Speichern der Änderungen an einer Folie
+        function saveSlide() {
+            if (currentEditingSlide) {
+                const slideType = document.getElementById('slide-type').value,
+                    slideTitle = document.getElementById('slide-title').value,
+                    slideContent = document.getElementById('slide-content').value,
+                    slideImage = document.getElementById('slide-image').value;
+
+                let slideHTML = getSlideHTML(slideType, slideTitle, slideContent, slideImage);
+                currentEditingSlide.innerHTML = slideHTML;
+
+                const slideIndex = Array.from(document.getElementById('presentation-container').children).indexOf(currentEditingSlide);
+                slides[slideIndex] = { type: slideType, title: slideTitle, content: slideContent, image: slideImage };
+
+                addSlideControls(currentEditingSlide, slideType, slideTitle, slideContent, slideImage);
+
+                currentEditingSlide = null;
+                document.getElementById('save-slide-btn').style.display = 'none';
+
+                clearForm();
+            }
+        }
+
+        // Funktion zum Löschen einer Folie
+        function deleteSlide(slideContainer) {
+            const slideIndex = Array.from(document.getElementById('presentation-container').children).indexOf(slideContainer);
+            slides.splice(slideIndex, 1);
+            slideContainer.remove();
+        }
+
+        // Funktion zum Verschieben einer Folie nach oben
+        function moveSlideUp(slideContainer) {
+            const slideIndex = Array.from(document.getElementById('presentation-container').children).indexOf(slideContainer);
+            if (slideIndex > 0) {
+                const presentationContainer = document.getElementById('presentation-container');
+                presentationContainer.insertBefore(slideContainer, presentationContainer.children[slideIndex - 1]);
+                [slides[slideIndex - 1], slides[slideIndex]] = [slides[slideIndex], slides[slideIndex - 1]];
+            }
+        }
+
+        // Funktion zum Verschieben einer Folie nach unten
+        function moveSlideDown(slideContainer) {
+            const presentationContainer = document.getElementById('presentation-container'),
+                slideIndex = Array.from(presentationContainer.children).indexOf(slideContainer);
+            if (slideIndex < slides.length - 1) {
+                presentationContainer.insertBefore(presentationContainer.children[slideIndex + 1], slideContainer);
+                [slides[slideIndex + 1], slides[slideIndex]] = [slides[slideIndex], slides[slideIndex + 1]];
+            }
+        }
+
+        // Funktion zum Leeren des Formulars nach dem Hinzufügen oder Bearbeiten einer Folie
+        function clearForm() {
+            document.getElementById('slide-title').value = '';
+            document.getElementById('slide-content').value = '';
+            document.getElementById('slide-image').value = '';
+            document.getElementById('slide-type').value = 'text';
+        }
+
+        // Präsentationsfunktionen
+        function startPresentation() {
+            if (slides.length === 0) {
+                alert('Es gibt keine Folien zum Präsentieren.');
+                return;
+            }
+            // Hintergrundfarbe der Präsentation setzen
+            const bgColor = getComputedStyle(document.body).backgroundColor;
+            document.querySelector('.presentation-mode').style.backgroundColor = bgColor;
+            document.querySelector('.presentation-mode').style.color = getComputedStyle(document.documentElement).getPropertyValue('--text-color');
+
+            currentSlideIndex = 0;
+            showSlide();
+            document.getElementById('presentation-mode').style.display = 'flex';
+        }
+
+        // Funktion zum Anzeigen der aktuellen Folie
+        function showSlide() {
+            const slide = slides[currentSlideIndex];
+            document.getElementById('presentation-slide').innerHTML = getSlideHTML(slide.type, slide.title, slide.content, slide.image, true);
+            const slideElement = document.getElementById('presentation-slide');
+            slideElement.style.opacity = 0;
+            slideElement.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                slideElement.style.opacity = 1;
+                slideElement.style.transform = 'translateY(0)';
+            }, 100);
+        }
+
+        // Nächste Folie anzeigen
+        function nextSlide() {
+            if (currentSlideIndex < slides.length - 1) {
+                currentSlideIndex++;
+                showSlide();
+            }
+        }
+
+        // Vorherige Folie anzeigen
+        function previousSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                showSlide();
+            }
+        }
+
+        // Präsentationsmodus verlassen
+        function exitPresentation() {
+            document.getElementById('presentation-mode').style.display = 'none';
+        }
+
+        // Funktion zum Generieren des Präsentationscodes
+        function generatePresentationCode() {
+            const presentationSettings = {
+                slides: slides,
+                backgroundColor: backgroundColor,
+                heroImage: heroImageUrl,
+                heroHeading: heroHeadingText,
+                coverImage: coverImageUrl
+            };
+            const code = JSON.stringify(presentationSettings, null, 4);
+            document.getElementById('presentation-code').value = code;
+        }
+
+        // Präsentationscode in die Zwischenablage kopieren
+        function copyToClipboard() {
+            const code = document.getElementById('presentation-code').value;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Code kopiert!');
+            }).catch(err => {
+                console.error('Fehler beim Kopieren: ', err);
+            });
+        }
+
+        // Präsentationscode importieren
+        function importPresentationCode() {
+            try {
+                const code = document.getElementById('import-code').value;
+                const importedData = JSON.parse(code);
+
+                // Einstellungen anwenden
+                slides = importedData.slides || [];
+                backgroundColor = importedData.backgroundColor || '#f4f6f9';
+                heroImageUrl = importedData.heroImage || '';
+                heroHeadingText = importedData.heroHeading || 'Willkommen zu der Präsentation';
+                coverImageUrl = importedData.coverImage || '';
+
+                // Hintergrundfarbe setzen
+                document.getElementById('background-color-picker').value = backgroundColor;
+                document.body.style.backgroundColor = backgroundColor;
+                document.documentElement.style.setProperty('--background-color', backgroundColor);
+                adjustTextColor(backgroundColor);
+
+                // Hero-Bild setzen
+                if (heroImageUrl) {
+                    document.getElementById('hero-image-url').value = heroImageUrl;
+                    document.getElementById('hero-section').style.backgroundImage = `url('${heroImageUrl}')`;
+                }
+
+                // Hero-Überschrift setzen
+                if (heroHeadingText) {
+                    document.getElementById('hero-heading-text').value = heroHeadingText;
+                    document.querySelector('#hero-section .hero-content h1').textContent = heroHeadingText;
+                }
+
+                // Deckblattbild setzen
+                if (coverImageUrl) {
+                    document.getElementById('cover-image-url').value = coverImageUrl;
+                    document.getElementById('cover-image').src = coverImageUrl;
+                }
+
+                // Folien anzeigen
+                const presentationContainer = document.getElementById('presentation-container');
+                presentationContainer.innerHTML = '';
+                slides.forEach((slide, index) => {
+                    const slideContainer = document.createElement('div');
+                    slideContainer.classList.add('slide-container');
+                    slideContainer.innerHTML = getSlideHTML(slide.type, slide.title, slide.content, slide.image);
+                    addSlideControls(slideContainer, slide.type, slide.title, slide.content, slide.image);
+                    presentationContainer.appendChild(slideContainer);
+                });
+            } catch (error) {
+                alert('Ungültiger Code.');
+            }
+        }
+
+        // Präsentationscode aus der Zwischenablage einfügen
+        function pasteFromClipboard() {
+            navigator.clipboard.readText().then(text => {
+                document.getElementById('import-code').value = text;
+                alert('Code eingefügt!');
+            }).catch(err => {
+                console.error('Fehler beim Einfügen: ', err);
+            });
+        }
+
+        // Funktion zum sanften Scrollen zu bestimmten Abschnitten
+        function smoothScroll(target) {
+            document.querySelector(target).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
     </script>
 </body>
 </html>
