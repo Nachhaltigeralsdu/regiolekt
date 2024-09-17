@@ -1,6 +1,7 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="de">
 <head>
+    <!-- Dokument-Typ und Sprache festlegen -->
     <meta charset="UTF-8">
     <!-- Responsives Design für mobile Geräte -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,135 +22,133 @@
 
         /* Grundlegende Stile für den Body */
         body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f6f9;
-            color: var(--text-color);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
+            font-family: 'Roboto', sans-serif; /* Schriftart setzen */
+            margin: 0; /* Kein Standardabstand */
+            padding: 0; /* Kein Standardinnenabstand */
+            background: #f4f6f9; /* Hintergrundfarbe */
+            color: var(--text-color); /* Textfarbe basierend auf CSS-Variable */
+            overflow-x: hidden; /* Horizontaler Scrollbalken wird ausgeblendet */
+            scroll-behavior: smooth; /* Sanftes Scrollen */
             /* Übergangseffekt für Hintergrundfarbe und Textfarbe */
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
         /* Stile für alle textbezogenen Elemente */
         body, h1, h2, h3, p, a, button, label, input, textarea, select {
-            color: var(--text-color);
+            color: var(--text-color); /* Einheitliche Textfarbe */
         }
 
         /* Placeholder-Textfarbe */
         ::placeholder {
-            color: var(--placeholder-color);
+            color: var(--placeholder-color); /* Farbe des Platzhalters */
             opacity: 1; /* Stelle sicher, dass die Opazität aus der Variable kommt */
         }
 
         /* Stile für die Navigationsleiste */
         .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
+            position: fixed; /* Fixiert am oberen Rand des Bildschirms */
+            top: 0; /* Am oberen Rand ausgerichtet */
+            width: 100%; /* Nimmt die volle Breite des Bildschirms ein */
             padding: 1.5rem 2rem; /* Einheitliches Padding */
-            background: rgba(34, 34, 34, 0.121);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s;
+            background: rgba(34, 34, 34, 0.121); /* Transparenter Hintergrund */
+            backdrop-filter: blur(10px); /* Unscharfer Hintergrund */
+            z-index: 1000; /* Über anderen Elementen */
+            display: flex; /* Flexbox-Layout */
+            justify-content: center; /* Zentrierte Inhalte */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Schatteneffekt */
+            transition: background-color 0.3s; /* Übergangseffekt für Hintergrundfarbe */
         }
         .navbar ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem; /* Reduziertes Gap für bessere Mobilität */
-            margin: 0;
-            padding: 0;
+            list-style: none; /* Keine Aufzählungszeichen */
+            display: flex; /* Flexbox-Layout */
+            gap: 13rem; /* Abstand zwischen den Elementen */
+            margin: 0; /* Kein Außenabstand */
+            padding: 0; /* Kein Innenabstand */
         }
         .navbar li {
-            position: relative;
+            position: relative; /* Relativ positioniert */
         }
         .navbar a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: color 0.3s, transform 0.3s;
+            color: var(--text-color); /* Textfarbe */
+            text-decoration: none; /* Keine Unterstreichung */
+            font-weight: bold; /* Fettgedruckt */
+            font-size: 1.1rem; /* Schriftgröße */
+            transition: color 0.3s, transform 0.3s; /* Übergangseffekte */
         }
         .navbar a:hover {
-            color: #007bff;
-            transform: scale(1.1);
+            color: #007bff; /* Farbe beim Hover */
+            transform: scale(1.1); /* Vergrößerung beim Hover */
         }
 
         /* Stile für den Hero-Bereich */
         .hero {
-            position: relative;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: relative; /* Relativ positioniert */
+            height: 100vh; /* Vollbildhöhe */
+            width: 100vw; /* Vollbildbreite */
+            overflow: hidden; /* Überlauf ausblenden */
+            background-size: cover; /* Hintergrundbild skalieren */
+            background-position: center; /* Hintergrundbild zentrieren */
+            display: flex; /* Flexbox-Layout */
+            justify-content: center; /* Zentrierte Inhalte */
+            align-items: center; /* Vertikal zentriert */
         }
         .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 2rem;
-            animation: fadeIn 2s;
+            position: relative; /* Relativ positioniert */
+            z-index: 1; /* Über anderen Elementen */
+            text-align: center; /* Zentrierter Text */
+            padding: 2rem; /* Innenabstand */
+            animation: fadeIn 2s; /* Einblendeanimation */
         }
         .hero-content h1 {
-            font-size: 3.5rem;
-            margin: 0;
-            animation: slideInDown 1s;
+            font-size: 3.5rem; /* Schriftgröße */
+            margin: 0; /* Kein Außenabstand */
+            animation: slideInDown 1s; /* Einblendeanimation */
         }
         .hero-content p {
-            font-size: 1.5rem;
-            margin-top: 1rem;
-            animation: slideInUp 1s;
+            font-size: 1.5rem; /* Schriftgröße */
+            margin-top: 1rem; /* Abstand nach oben */
+            animation: slideInUp 1s; /* Einblendeanimation */
         }
 
         /* Hauptinhalt */
         .main-content {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            transition: transform 0.3s, opacity 0.3s;
+            padding: 2rem; /* Innenabstand */
+            max-width: 1200px; /* Maximale Breite */
+            margin: 0 auto; /* Zentriert */
+            transition: transform 0.3s, opacity 0.3s; /* Übergangseffekte */
         }
 
         /* Formular zum Erstellen von Folien */
         .slide-form {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            padding: 2rem; /* Einheitliches Padding */
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s;
-            transition: transform 0.3s;
+            background: transparent; /* Transparenter Hintergrund */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Rahmen */
+            backdrop-filter: blur(20px); /* Unscharfer Hintergrund */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Schatteneffekt */
+            padding: 2rem; /* Innenabstand */
+            border-radius: 8px; /* Abgerundete Ecken */
+            margin-bottom: 2rem; /* Abstand nach unten */
+            animation: fadeInUp 1s; /* Einblendeanimation */
+            transition: transform 0.3s; /* Übergangseffekt */
         }
         .slide-form input,
         .slide-form textarea,
         .slide-form select {
-            width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            background: transparent;
-            backdrop-filter: blur(30px);
-            /* Entferne den Schatten */
-            box-shadow: none;
-            color: var(--text-color);
-            transition: border-color 0.3s, box-shadow 0.3s;
+            width: 100%; /* Volle Breite */
+            padding: 0.75rem; /* Innenabstand */
+            margin-bottom: 1rem; /* Abstand nach unten */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Rahmen */
+            border-radius: 4px; /* Abgerundete Ecken */
+            background: transparent; /* Transparenter Hintergrund */
+            backdrop-filter: blur(30px); /* Unscharfer Hintergrund */
+            box-shadow: none; /* Kein Schatten */
+            color: var(--text-color); /* Textfarbe */
+            transition: border-color 0.3s, box-shadow 0.3s; /* Übergangseffekte */
         }
         .slide-form input:focus,
         .slide-form textarea:focus,
         .slide-form select:focus {
-            border-color: #3b82f6;
-            /* Optional: Füge einen leicht sichtbaren Fokus-Effekt hinzu */
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6; /* Rahmenfarbe beim Fokus */
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); /* Schatten beim Fokus */
         }
 
         /* Stile für Buttons */
@@ -160,17 +159,17 @@
         .delete-button,
         .move-up-button,
         .move-down-button {
-            padding: 0.5rem 1.2rem;
-            background: transparent;
-            color: var(--text-color);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, backdrop-filter 0.3s;
-            margin-right: 0.5rem;
-            margin-bottom: 1rem;
-            backdrop-filter: blur(30px);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            padding: 0.5rem 1.2rem; /* Innenabstand */
+            background: transparent; /* Transparenter Hintergrund */
+            color: var(--text-color); /* Textfarbe */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Rahmen */
+            border-radius: 4px; /* Abgerundete Ecken */
+            cursor: pointer; /* Zeiger bei Hover */
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, backdrop-filter 0.3s; /* Übergangseffekte */
+            margin-right: 0.5rem; /* Abstand rechts */
+            margin-bottom: 1rem; /* Abstand nach unten */
+            backdrop-filter: blur(30px); /* Unscharfer Hintergrund */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Schatteneffekt */
         }
         .slide-form button:hover,
         .presentation-controls button:hover,
@@ -180,7 +179,7 @@
         .move-up-button:hover,
         .move-down-button:hover {
             background: rgba(0, 123, 255, 0.2); /* Leicht transparente Hintergrundfarbe beim Hover */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Schatteneffekt beim Hover */
         }
         .slide-form button:focus,
         .presentation-controls button:focus,
@@ -189,72 +188,73 @@
         .delete-button:focus,
         .move-up-button:focus,
         .move-down-button:focus {
-            outline: none;
-            box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
+            outline: none; /* Keine Umrandung */
+            box-shadow: 0 0 12px rgba(0, 123, 255, 0.5); /* Schatteneffekt beim Fokus */
         }
 
         /* Container für einzelne Folien */
         .slide-container {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            margin-bottom: 1.5rem;
-            padding: 2rem; /* Einheitliches Padding */
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 1s;
-            transition: transform 0.3s, opacity 0.3s;
+            background: transparent; /* Transparenter Hintergrund */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Rahmen */
+            backdrop-filter: blur(20px); /* Unscharfer Hintergrund */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Schatteneffekt */
+            margin-bottom: 1.5rem; /* Abstand nach unten */
+            padding: 2rem; /* Innenabstand */
+            border-radius: 8px; /* Abgerundete Ecken */
+            position: relative; /* Relativ positioniert */
+            overflow: hidden; /* Überlauf ausblenden */
+            animation: fadeInUp 1s; /* Einblendeanimation */
+            transition: transform 0.3s, opacity 0.3s; /* Übergangseffekte */
         }
         .slide-container h2 {
-            font-size: 1.5rem;
-            margin: 0 0 1rem;
+            font-size: 1.5rem; /* Schriftgröße */
+            margin: 0 0 1rem; /* Abstand nach unten */
         }
         .slide-container img,
         .slide-container iframe {
-            width: 100%;
-            max-width: 600px;
-            border-radius: 8px;
-            transition: transform 0.3s;
-            margin-bottom: 1.5rem;
+            width: 100%; /* Volle Breite */
+            max-width: 400px; /* Maximale Breite */
+            max-height: 200px;
+            border-radius: 8px; /* Abgerundete Ecken */
+            transition: transform 0.3s; /* Übergangseffekt */
+            margin-bottom: 1.5rem; /* Abstand nach unten */ 
         }
         .slide-container img:hover,
         .slide-container iframe:hover {
-            transform: scale(1.05);
+            transform: scale(1.05); /* Vergrößerung beim Hover */
         }
 
         /* Deckblatt der Präsentation */
         .presentation-cover {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            padding: 2rem;
-            margin-top: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: fadeInUp 1s;
+            background: transparent; /* Transparenter Hintergrund */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Rahmen */
+            backdrop-filter: blur(20px); /* Unscharfer Hintergrund */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Schatteneffekt */
+            padding: 2rem; /* Innenabstand */
+            margin-top: 2rem; /* Abstand nach oben */
+            border-radius: 12px; /* Abgerundete Ecken */
+            text-align: center; /* Zentrierter Text */
+            cursor: pointer; /* Zeiger bei Hover */
+            transition: transform 0.3s, box-shadow 0.3s; /* Übergangseffekte */
+            animation: fadeInUp 1s; /* Einblendeanimation */
         }
         .presentation-cover:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transform: scale(1.02); /* Vergrößerung beim Hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Schatteneffekt beim Hover */
         }
         .presentation-cover h2 {
-            margin-bottom: 1rem;
-            font-size: 2rem;
+            margin-bottom: 1rem; /* Abstand nach unten */
+            font-size: 2rem; /* Schriftgröße */
         }
         .presentation-cover img {
-            max-width: 80%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            transition: transform 0.3s;
+            max-width: 80%; /* Maximale Breite */
+            height: auto; /* Automatische Höhe */
+            border-radius: 8px; /* Abgerundete Ecken */
+            margin-bottom: 1rem; /* Abstand nach unten */
+            transition: transform 0.3s; /* Übergangseffekt */
         }
         .presentation-cover img:hover {
-            transform: scale(1.05);
+            transform: scale(1.05); /* Vergrößerung beim Hover */
         }
 
         /* Präsentationsmodus */
@@ -276,7 +276,7 @@
             transition: background-color 0.3s, color 0.3s; /* Übergangseffekt bei Hintergrundfarben- und Schriftfarbenänderung */
         }
         .presentation-slide {
-            max-width: 95%; /* Maximale Breite der Folie */
+            max-width: 100%; /* Maximale Breite der Folie */
             max-height: 95%; /* Maximale Höhe der Folie */
             text-align: left; /* Text linksbündig */
             display: flex; /* Flexbox für Layout */
@@ -287,28 +287,28 @@
             margin-bottom: 10rem; /* Abstand nach unten */
         }
         .presentation-slide h2 {
-            font-size: 3.5rem; /* Große Überschrift */
+            font-size: 3rem; /* Große Überschrift */
             margin-bottom: 1.7rem; /* Abstand nach unten */
             text-align: center; /* Zentrierter Text */
         }
         .presentation-slide ul {
             list-style-position: inside; /* Listenpunkte innerhalb des Elements */
-            padding-left: 1.5rem; /* Innenabstand links */
             margin-top: 1rem; /* Abstand nach oben */
-            font-size: 1.8rem; /* Schriftgröße der Liste */
+            font-size: 1.7rem; /* Schriftgröße der Liste */
         }
         .presentation-slide p {
             font-size: 2rem; /* Schriftgröße des Textes */
             line-height: 1.5; /* Zeilenhöhe */
             margin-top: 1rem; /* Abstand nach oben */
             text-align: center; /* Zentrierter Text */
-            width: 80%; /* Breite des Textblocks */
+            margin-left: 10%;
+            margin-right: 10%;
         }
         .presentation-slide img,
         .presentation-slide iframe,
         .presentation-slide video {
             max-width: 100%; /* Bilder und Medien füllen maximale Breite */
-            max-height: 70vh; /* Maximale Höhe in Bezug auf Viewport-Höhe */
+            max-height: 50vh; /* Maximale Höhe in Bezug auf Viewport-Höhe */
             border-radius: 8px; /* Abgerundete Ecken */
             margin-bottom: 1rem; /* Abstand nach unten */
             transition: transform 0.3s; /* Übergangseffekt bei Transformation */
@@ -336,7 +336,7 @@
         /* Stile für Präsentationssteuerungen */
         .presentation-controls {
             position: absolute; /* Positioniert relativ zum nächsten nicht-statischen Vorfahren */
-            bottom: 80px; /* Abstand vom unteren Rand des Präsentationsmodus */
+            bottom: 2.5%; /* Abstand vom unteren Rand des Präsentationsmodus */
             width: 100%; /* Nimmt die gesamte Breite ein */
             display: flex; /* Flexbox für die Buttons */
             justify-content: center; /* Zentriert die Buttons horizontal */
@@ -348,67 +348,65 @@
 
         /* Container für Codeexport/-import */
         .code-container {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            padding: 2rem; /* Einheitliches Padding */
-            border-radius: 8px;
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s;
+            background: transparent; /* Transparenter Hintergrund */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Rahmen */
+            backdrop-filter: blur(20px); /* Unscharfer Hintergrund */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Schatteneffekt */
+            padding: 2rem; /* Innenabstand */
+            border-radius: 8px; /* Abgerundete Ecken */
+            margin-top: 2rem; /* Abstand nach oben */
+            margin-bottom: 2rem; /* Abstand nach unten */
+            animation: fadeInUp 1s; /* Einblendeanimation */
         }
         .code-container textarea {
-            width: 100%;
-            height: 150px;
-            margin-bottom: 1rem;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            padding: 1rem;
-            font-family: monospace;
-            resize: none;
-            background: transparent;
-            backdrop-filter: blur(30px);
-            /* Entferne den Schatten */
-            box-shadow: none;
-            color: var(--text-color);
-            transition: border-color 0.3s, box-shadow 0.3s;
+            width: 100%; /* Volle Breite */
+            height: 150px; /* Höhe */
+            margin-bottom: 1rem; /* Abstand nach unten */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Rahmen */
+            border-radius: 4px; /* Abgerundete Ecken */
+            padding: 1rem; /* Innenabstand */
+            font-family: monospace; /* Monospace-Schriftart */
+            resize: none; /* Kein Resize-Handle */
+            background: transparent; /* Transparenter Hintergrund */
+            backdrop-filter: blur(30px); /* Unscharfer Hintergrund */
+            box-shadow: none; /* Kein Schatten */
+            color: var(--text-color); /* Textfarbe */
+            transition: border-color 0.3s, box-shadow 0.3s; /* Übergangseffekte */
         }
         .code-container textarea:focus {
-            border-color: #3b82f6;
-            /* Optional: Füge einen leicht sichtbaren Fokus-Effekt hinzu */
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6; /* Rahmenfarbe beim Fokus */
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); /* Schatteneffekt beim Fokus */
         }
 
         /* Stile für die Design-Einstellungen */
         .design-settings {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            padding: 2rem; /* Einheitliches Padding */
-            margin-top: 2rem;
-            border-radius: 8px;
-            animation: fadeInUp 1s;
+            background: transparent; /* Transparenter Hintergrund */
+            border: 2px solid rgba(255, 255, 255, 0.2); /* Rahmen */
+            backdrop-filter: blur(20px); /* Unscharfer Hintergrund */
+            box-shadow: 0 0 15px rgba(0,0,0,0.2); /* Schatteneffekt */
+            padding: 2rem; /* Innenabstand */
+            margin-top: 2rem; /* Abstand nach oben */
+            border-radius: 8px; /* Abgerundete Ecken */
+            animation: fadeInUp 1s; /* Einblendeanimation */
         }
         .design-settings h2 {
-            margin-bottom: 1rem;
+            margin-bottom: 1rem; /* Abstand nach unten */
         }
         .color-picker-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            display: flex; /* Flexbox */
+            align-items: center; /* Vertikal zentriert */
+            gap: 1rem; /* Abstand zwischen den Elementen */
         }
         .color-picker-wrapper label {
-            font-weight: bold;
+            font-weight: bold; /* Fettgedruckt */
         }
         .color-picker-wrapper input[type="color"] {
-            width: 40px;
-            height: 40px;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            background: none;
+            width: 40px; /* Breite des Farbpickers */
+            height: 40px; /* Höhe des Farbpickers */
+            border: none; /* Kein Rahmen */
+            cursor: pointer; /* Zeiger bei Hover */
+            padding: 0; /* Kein Innenabstand */
+            background: none; /* Kein Hintergrund */
         }
 
         /* Animationen */
@@ -436,23 +434,23 @@
         /* Responsives Design für kleinere Bildschirme */
         @media (max-width: 768px) {
             .main-content {
-                padding: 1rem;
+                padding: 1rem; /* Weniger Innenabstand */
             }
             .navbar ul {
-                gap: 1rem;
+                gap: 1rem; /* Geringerer Abstand zwischen den Elementen */
             }
             .hero-content h1 {
-                font-size: 2.5rem;
+                font-size: 2.5rem; /* Kleinere Schriftgröße */
             }
             .hero-content p {
-                font-size: 1.2rem;
+                font-size: 1.2rem; /* Kleinere Schriftgröße */
             }
             .presentation-slide h2 {
-                font-size: 2rem;
+                font-size: 2rem; /* Kleinere Schriftgröße */
             }
             .presentation-slide ul,
             .presentation-slide p {
-                font-size: 1.5rem;
+                font-size: 1.5rem; /* Kleinere Schriftgröße */
             }
         }
     </style>
@@ -470,7 +468,7 @@
     <!-- Hero-Bereich mit Hintergrundbild -->
     <section class="hero" id="hero-section" style="background-image: url('https://via.placeholder.com/1600x900');">
         <div class="hero-content">
-            <h1>Willkommen zu der Präsentation</h1>
+            <h1>Präsentation-name </h1>
         </div>
     </section>
     <div class="main-content">
@@ -636,7 +634,6 @@
 
             // Überprüfung, ob ein Titel erforderlich ist
             if (!slideTitle && !['text', 'closing'].includes(slideType)) {
-                alert('Bitte einen Titel eingeben!');
                 return;
             }
 
@@ -669,7 +666,7 @@
                 case 'image-left-bullets-right':
                     const imagePoints = content.split('\n').map(point => `<li>${point}</li>`).join('');
                     slideHTML = isPresentationMode ?
-                        `<div><h2>${title}</h2><div class="content-wrapper"><div style="flex: 1; padding: 1rem;"><ul style="list-style-position: inside; padding-left: 1.5rem; font-size: 1.8rem;">${imagePoints}</ul></div><div style="flex: 1; padding: 1rem;"><img src="${image}" alt="Bild"></div></div></div>` :
+                        `<div><h2>${title}</h2><div class="content-wrapper"><div style="flex: 1; padding-right: 2rem;"><ul style="list-style-position: inside; padding-left: 1.5rem; font-size: 1.6rem;">${imagePoints}</ul></div><div style="flex: 1; padding-left: 2rem;"><img src="${image}" alt="Bild"></div></div></div>` :
                         `<div style="display: flex; flex-wrap: wrap; align-items: flex-start;"><div style="flex: 1; min-width: 250px; padding-right: 1rem;"><h2 style="font-size: 2rem; margin-bottom: 1rem;">${title}</h2><ul style="list-style-position: inside; padding-left: 1.5rem; margin-top: 1rem;">${imagePoints}</ul></div><div style="flex: 1; min-width: 250px; padding-left: 1rem;"><img src="${image}" alt="Bild" style="width: 100%; border-radius: 8px;"></div></div>`;
                     break;
                 case 'image-only':
@@ -824,7 +821,6 @@
         // Präsentationsfunktionen
         function startPresentation() {
             if (slides.length === 0) {
-                alert('Es gibt keine Folien zum Präsentieren.');
                 return;
             }
             // Hintergrundfarbe der Präsentation setzen
@@ -888,7 +884,7 @@
         function copyToClipboard() {
             const code = document.getElementById('presentation-code').value;
             navigator.clipboard.writeText(code).then(() => {
-                alert('Code kopiert!');
+                // alert entfernt
             }).catch(err => {
                 console.error('Fehler beim Kopieren: ', err);
             });
@@ -942,7 +938,7 @@
                     presentationContainer.appendChild(slideContainer);
                 });
             } catch (error) {
-                alert('Ungültiger Code.');
+                // alert entfernt
             }
         }
 
@@ -950,7 +946,7 @@
         function pasteFromClipboard() {
             navigator.clipboard.readText().then(text => {
                 document.getElementById('import-code').value = text;
-                alert('Code eingefügt!');
+                // alert entfernt
             }).catch(err => {
                 console.error('Fehler beim Einfügen: ', err);
             });
