@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <!-- Dokument-Typ und Sprache festlegen -->
@@ -61,7 +61,7 @@
         .navbar ul {
             list-style: none; /* Keine Aufzählungszeichen */
             display: flex; /* Flexbox-Layout */
-            gap: 8rem; /* Abstand zwischen den Elementen */
+            gap: 13rem; /* Abstand zwischen den Elementen */
             margin: 0; /* Kein Außenabstand */
             padding: 0; /* Kein Innenabstand */
         }
@@ -158,7 +158,8 @@
         .edit-button,
         .delete-button,
         .move-up-button,
-        .move-down-button {
+        .move-down-button,
+        .image-select-button {
             padding: 0.5rem 1.2rem; /* Innenabstand */
             background: transparent; /* Transparenter Hintergrund */
             color: var(--text-color); /* Textfarbe */
@@ -169,7 +170,6 @@
             margin-right: 0.5rem; /* Abstand rechts */
             margin-bottom: 1rem; /* Abstand nach unten */
             backdrop-filter: blur(30px); /* Unscharfer Hintergrund */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Schatteneffekt */
         }
         .slide-form button:hover,
         .presentation-controls button:hover,
@@ -177,9 +177,9 @@
         .edit-button:hover,
         .delete-button:hover,
         .move-up-button:hover,
-        .move-down-button:hover {
+        .move-down-button:hover,
+        .image-select-button:hover {
             background: rgba(0, 123, 255, 0.2); /* Leicht transparente Hintergrundfarbe beim Hover */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Schatteneffekt beim Hover */
         }
         .slide-form button:focus,
         .presentation-controls button:focus,
@@ -187,7 +187,8 @@
         .edit-button:focus,
         .delete-button:focus,
         .move-up-button:focus,
-        .move-down-button:focus {
+        .move-down-button:focus,
+        .image-select-button:focus {
             outline: none; /* Keine Umrandung */
             box-shadow: 0 0 12px rgba(0, 123, 255, 0.5); /* Schatteneffekt beim Fokus */
         }
@@ -453,6 +454,61 @@
                 font-size: 1.5rem; /* Kleinere Schriftgröße */
             }
         }
+
+        /* Stile für das Bilderauswahl-Modal */
+        .image-modal {
+            display: none; /* Versteckt standardmäßig */
+            position: fixed; /* Fixiert relativ zum Fenster */
+            z-index: 10000; /* Oberhalb aller anderen Elemente */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Scrollbar bei Bedarf */
+            background-color: rgba(0,0,0,0.8); /* Schwarzer Hintergrund mit Transparenz */
+            justify-content: center; /* Zentriert horizontal */
+            align-items: center; /* Zentriert vertikal */
+        }
+        .image-modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 8px;
+            max-height: 90%;
+            overflow-y: auto;
+        }
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-modal:hover,
+        .close-modal:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        .image-grid img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            transition: border 0.3s;
+        }
+        .image-grid img:hover {
+            border: 2px solid #007bff;
+        }
     </style>
 </head>
 <body>
@@ -475,7 +531,10 @@
         <!-- Formular zum Hochladen eines Hero-Bildes -->
         <div class="slide-form" id="heroImageForm">
             <h2>Willkommensbild hochladen</h2>
-            <input type="text" id="hero-image-url" placeholder="Bild-URL für Willkommensbereich eingeben">
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="hero-image-url" placeholder="Bild-URL für Willkommensbereich eingeben">
+                <button type="button" class="image-select-button" onclick="openImageModal('hero-image-url')">Bild auswählen</button>
+            </div>
             <button type="button" onclick="setHeroImage()">Bild setzen</button>
         </div>
         <!-- Formular zum Bearbeiten des Willkommens-Titels -->
@@ -499,7 +558,10 @@
             </select>
             <input type="text" id="slide-title" placeholder="Titel">
             <textarea id="slide-content" placeholder="Inhalt (für Stichpunkte oder Checkliste: einen pro Zeile)"></textarea>
-            <input type="text" id="slide-image" placeholder="Bild-/Medien-URL (optional)">
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="slide-image" placeholder="Bild-/Medien-URL (optional)">
+                <button type="button" class="image-select-button" onclick="openImageModal('slide-image')">Bild auswählen</button>
+            </div>
             <button type="button" onclick="addSlide()">Folie hinzufügen</button>
             <button type="button" onclick="saveSlide()" style="display: none;" id="save-slide-btn">Änderungen speichern</button>
         </div>
@@ -518,7 +580,10 @@
         <!-- Formular zum Setzen des Deckblattbildes -->
         <div class="slide-form" id="coverImageForm">
             <h2>Deckblatt-Bildlink</h2>
-            <input type="text" id="cover-image-url" placeholder="Bild-URL für Deckblatt eingeben">
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="cover-image-url" placeholder="Bild-URL für Deckblatt eingeben">
+                <button type="button" class="image-select-button" onclick="openImageModal('cover-image-url')">Bild auswählen</button>
+            </div>
             <button type="button" onclick="setCoverImage()">Deckblatt setzen</button>
         </div>
         <!-- Neue Sektion für Design-Einstellungen -->
@@ -545,18 +610,852 @@
             <button onclick="exitPresentation()">Verlassen</button>
         </div>
     </div>
-    <!-- JavaScript-Code zur Steuerung der Präsentation -->
+
+    <!-- Bilderauswahl-Modal -->
+    <div id="imageModal" class="image-modal">
+        <div class="image-modal-content">
+            <span class="close-modal" onclick="closeImageModal()">&times;</span>
+            <h2>Bilder auswählen</h2>
+            <div class="image-grid" id="imageGrid">
+                <!-- Bilder werden hier dynamisch eingefügt -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript-Code zur Steuerung der Präsentation und Bilderauswahl -->
     <script>
         // Globale Variablen zur Verwaltung des aktuellen Bearbeitungszustands und der Folien
         let currentEditingSlide = null,
             currentSlideIndex = 0,
             slides = [];
-        
+
         // Neue Variablen für zusätzliche Einstellungen
         let backgroundColor = '#f4f6f9',
             heroImageUrl = '',
             heroHeadingText = 'Willkommen zu der Präsentation',
             coverImageUrl = '';
+
+        // Liste aller Bildnamen
+        const imageFilenames = [
+            "istockphoto-1005423606-612x612",
+            "istockphoto-1007582848-612x612",
+            "istockphoto-1014220954-612x612",
+            "istockphoto-1023497042-612x612",
+            "istockphoto-1037127108-612x612",
+            "istockphoto-1041068422-612x612",
+            "istockphoto-1053186504-612x612",
+            "istockphoto-1062444710-612x612",
+            "istockphoto-1075237796-612x612",
+            "istockphoto-1080019574-612x612",
+            "istockphoto-109719062-612x612",
+            "istockphoto-1128540284-612x612",
+            "istockphoto-1130441229-612x612",
+            "istockphoto-1130636223-612x612",
+            "istockphoto-1139238705-612x612",
+            "istockphoto-1141522121-612x612",
+            "istockphoto-1141982139-612x612",
+            "istockphoto-1143127039-612x612",
+            "istockphoto-1143453522-612x612",
+            "istockphoto-1145853289-612x612",
+            "istockphoto-1148857816-612x612",
+            "istockphoto-1149015425-612x612",
+            "istockphoto-1152191393-612x612",
+            "istockphoto-1153674131-612x612",
+            "istockphoto-1154941861-612x612",
+            "istockphoto-1164889653-612x612",
+            "istockphoto-1168910322-612x612",
+            "istockphoto-1174074500-612x612",
+            "istockphoto-1176670956-612x612",
+            "istockphoto-1183790559-612x612",
+            "istockphoto-1187235244-612x612",
+            "istockphoto-1188304493-612x612",
+            "istockphoto-1194645897-612x612",
+            "istockphoto-1205988090-612x612",
+            "istockphoto-1206404149-612x612",
+            "istockphoto-1207692239-612x612",
+            "istockphoto-1209008469-612x612",
+            "istockphoto-1212158838-612x612",
+            "istockphoto-121306620-612x612",
+            "istockphoto-1215789481-612x612",
+            "istockphoto-1217648505-612x612",
+            "istockphoto-1218490019-612x612",
+            "istockphoto-1219719366-612x612",
+            "istockphoto-1225941582-612x612",
+            "istockphoto-1226637853-612x612",
+            "istockphoto-1226867821-612x612",
+            "istockphoto-1227607506-612x612",
+            "istockphoto-1251530168-612x612",
+            "istockphoto-1253071923-612x612",
+            "istockphoto-1264368866-612x612",
+            "istockphoto-1264393471-612x612",
+            "istockphoto-1269454123-612x612",
+            "istockphoto-1272034373-612x612",
+            "istockphoto-1277671309-612x612",
+            "istockphoto-1277767410-612x612",
+            "istockphoto-1277987818-612x612",
+            "istockphoto-1279021691-612x612",
+            "istockphoto-1286284454-612x612",
+            "istockphoto-1286711636-612x612",
+            "istockphoto-1287355563-612x612",
+            "istockphoto-1290559653-612x612",
+            "istockphoto-1291418849-612x612",
+            "istockphoto-1292248915-612x612",
+            "istockphoto-1293956069-612x612",
+            "istockphoto-1295658117-612x612",
+            "istockphoto-1296441088-612x612",
+            "istockphoto-1299086679-612x612",
+            "istockphoto-1300883281-612x612",
+            "istockphoto-1305840978-612x612",
+            "istockphoto-1307461253-612x612",
+            "istockphoto-1313232187-612x612",
+            "istockphoto-1313649311-612x612",
+            "istockphoto-1316651541-612x612",
+            "istockphoto-1317017403-612x612",
+            "istockphoto-1317518621-612x612",
+            "istockphoto-1320509822-612x612",
+            "istockphoto-1321128933-612x612",
+            "istockphoto-1322928386-612x612",
+            "istockphoto-1324846983-612x612",
+            "istockphoto-1325350687-612x612",
+            "istockphoto-1335941460-612x612",
+            "istockphoto-1339034513-612x612",
+            "istockphoto-1342134434-612x612",
+            "istockphoto-1342281706-612x612",
+            "istockphoto-1343512035-612x612",
+            "istockphoto-1345296778-612x612",
+            "istockphoto-1351718972-612x612",
+            "istockphoto-135198515-612x612",
+            "istockphoto-1352584664-612x612",
+            "istockphoto-1357880678-612x612",
+            "istockphoto-1358727857-612x612",
+            "istockphoto-1360228963-612x612",
+            "istockphoto-1367468454-612x612",
+            "istockphoto-1367834825-612x612",
+            "istockphoto-1369303790-612x612",
+            "istockphoto-1394010549-612x612",
+            "istockphoto-1397018507-612x612",
+            "istockphoto-1401138982-612x612",
+            "istockphoto-1401325251-612x612",
+            "istockphoto-1401686454-612x612",
+            "istockphoto-1401737961-612x612",
+            "istockphoto-1402899980-612x612",
+            "istockphoto-1403277131-612x612",
+            "istockphoto-1412007846-612x612",
+            "istockphoto-1413463118-612x612",
+            "istockphoto-1415095773-612x612",
+            "istockphoto-1417071909-612x612",
+            "istockphoto-1419532732-612x612",
+            "istockphoto-1419631265-612x612",
+            "istockphoto-1421878861-612x612",
+            "istockphoto-1431750239-612x612",
+            "istockphoto-1433082806-612x612",
+            "istockphoto-1438210731-612x612",
+            "istockphoto-1445262065-612x612",
+            "istockphoto-1445548111-612x612",
+            "istockphoto-1447180306-612x612",
+            "istockphoto-1450272068-612x612",
+            "istockphoto-1453983475-612x612",
+            "istockphoto-1455112382-612x612",
+            "istockphoto-1456439383-612x612",
+            "istockphoto-1460543169-612x612",
+            "istockphoto-1461681870-612x612",
+            "istockphoto-1464784313-612x612",
+            "istockphoto-1468676655-612x612",
+            "istockphoto-1469082128-612x612",
+            "istockphoto-1475050865-612x612",
+            "istockphoto-1476784905-612x612",
+            "istockphoto-1478016720-612x612",
+            "istockphoto-1478045643-612x612",
+            "istockphoto-1480736252-612x612",
+            "istockphoto-1483060497-612x612",
+            "istockphoto-1483109986-612x612",
+            "istockphoto-1483361752-612x612",
+            "istockphoto-1483572120-612x612",
+            "istockphoto-1484755249-612x612",
+            "istockphoto-1485050002-612x612",
+            "istockphoto-1485050088-612x612",
+            "istockphoto-1485227737-612x612",
+            "istockphoto-1485785466-612x612",
+            "istockphoto-1485900365-612x612",
+            "istockphoto-1485907946-612x612",
+            "istockphoto-1487256441-612x612",
+            "istockphoto-1487346705-612x612",
+            "istockphoto-1487711268-612x612",
+            "istockphoto-1488517840-612x612",
+            "istockphoto-1488632619-612x612",
+            "istockphoto-1488641686-612x612",
+            "istockphoto-1488827064-612x612",
+            "istockphoto-1488894519-612x612",
+            "istockphoto-1488914726-612x612",
+            "istockphoto-1489285892-612x612",
+            "istockphoto-1489946881-612x612",
+            "istockphoto-1490117494-612x612",
+            "istockphoto-1490135079-612x612",
+            "istockphoto-1490394251-612x612",
+            "istockphoto-1490436783-612x612",
+            "istockphoto-1490503209-612x612",
+            "istockphoto-1490616772-612x612",
+            "istockphoto-1490675631-612x612",
+            "istockphoto-1491401236-612x612",
+            "istockphoto-1491466455-612x612",
+            "istockphoto-1491569697-612x612",
+            "istockphoto-1492439301-612x612",
+            "istockphoto-1492857671-612x612",
+            "istockphoto-1493020838-612x612",
+            "istockphoto-1493270847-612x612",
+            "istockphoto-1494062691-612x612",
+            "istockphoto-1494311697-612x612",
+            "istockphoto-1494319981-612x612",
+            "istockphoto-1494540194-612x612",
+            "istockphoto-1494909100-612x612",
+            "istockphoto-1495274680-612x612",
+            "istockphoto-1495940787-612x612",
+            "istockphoto-1496345077-612x612",
+            "istockphoto-1496383387-612x612",
+            "istockphoto-1496426263-612x612",
+            "istockphoto-1496470135-612x612",
+            "istockphoto-1496911536-612x612",
+            "istockphoto-1496985987-612x612",
+            "istockphoto-1497005728-612x612",
+            "istockphoto-1497057607-612x612",
+            "istockphoto-1497528537-612x612",
+            "istockphoto-1497810933-612x612",
+            "istockphoto-1497927522-612x612",
+            "istockphoto-1497953749-612x612",
+            "istockphoto-1498634473-612x612",
+            "istockphoto-1498789347-612x612",
+            "istockphoto-1498871031-612x612",
+            "istockphoto-1499143152-612x612",
+            "istockphoto-1499742191-612x612",
+            "istockphoto-1500099298-612x612",
+            "istockphoto-1500290846-612x612",
+            "istockphoto-1500316117-612x612",
+            "istockphoto-1500404598-612x612",
+            "istockphoto-1500491382-612x612",
+            "istockphoto-1500779063-612x612",
+            "istockphoto-1500816306-612x612",
+            "istockphoto-1501184003-612x612",
+            "istockphoto-1501213279-612x612",
+            "istockphoto-1501249563-612x612",
+            "istockphoto-1501696194-612x612",
+            "istockphoto-1502101834-612x612",
+            "istockphoto-1502237024-612x612",
+            "istockphoto-1502320400-612x612",
+            "istockphoto-1502421821-612x612",
+            "istockphoto-1502645451-612x612",
+            "istockphoto-1503234376-612x612",
+            "istockphoto-1504039978-612x612",
+            "istockphoto-1505430092-612x612",
+            "istockphoto-1507150747-612x612",
+            "istockphoto-1510831626-612x612",
+            "istockphoto-1512443291-612x612",
+            "istockphoto-1516598820-612x612",
+            "istockphoto-1519355660-612x612",
+            "istockphoto-1519524622-612x612",
+            "istockphoto-1521746077-612x612",
+            "istockphoto-1522265989-612x612",
+            "istockphoto-1524835742-612x612",
+            "istockphoto-1524990850-612x612",
+            "istockphoto-1525152092-612x612",
+            "istockphoto-1528244962-612x612",
+            "istockphoto-1529812292-612x612",
+            "istockphoto-1530155223-612x612",
+            "istockphoto-1530667320-612x612",
+            "istockphoto-1532459823-612x612",
+            "istockphoto-1533554660-612x612",
+            "istockphoto-1533851888-612x612",
+            "istockphoto-1534444037-612x612",
+            "istockphoto-1535913828-612x612",
+            "istockphoto-1537319080-612x612",
+            "istockphoto-1539010657-612x612",
+            "istockphoto-1540018335-612x612",
+            "istockphoto-1540196131-612x612",
+            "istockphoto-1542439324-612x612",
+            "istockphoto-1542703221-612x612",
+            "istockphoto-1543183111-612x612",
+            "istockphoto-1547522643-612x612",
+            "istockphoto-154961211-612x612",
+            "istockphoto-1550128319-612x612",
+            "istockphoto-155372859-612x612",
+            "istockphoto-155381227-612x612",
+            "istockphoto-1554155348-612x612",
+            "istockphoto-155431941-612x612",
+            "istockphoto-1555389871-612x612",
+            "istockphoto-1556787185-612x612",
+            "istockphoto-1560297511-612x612",
+            "istockphoto-1561438010-612x612",
+            "istockphoto-1562768056-612x612",
+            "istockphoto-1565134273-612x612",
+            "istockphoto-1567860603-612x612",
+            "istockphoto-1567860892-612x612",
+            "istockphoto-1570062185-612x612",
+            "istockphoto-157181750-612x612",
+            "istockphoto-1573800978-612x612",
+            "istockphoto-157427739-612x612",
+            "istockphoto-1574603587-612x612",
+            "istockphoto-1574637237-612x612",
+            "istockphoto-157533672-612x612",
+            "istockphoto-1577057861-612x612",
+            "istockphoto-157727486-612x612",
+            "istockphoto-157731388-612x612",
+            "istockphoto-157772452-612x612",
+            "istockphoto-1580871569-612x612",
+            "istockphoto-1580951759-612x612",
+            "istockphoto-1581299905-612x612",
+            "istockphoto-1581309509-612x612",
+            "istockphoto-1581309911-612x612",
+            "istockphoto-1581412597-612x612",
+            "istockphoto-1584806371-612x612",
+            "istockphoto-1585442649-612x612",
+            "istockphoto-1585455348-612x612",
+            "istockphoto-1586523969-612x612",
+            "istockphoto-1586678411-612x612",
+            "istockphoto-1588097175-612x612",
+            "istockphoto-1588365645-612x612",
+            "istockphoto-1590247404-612x612",
+            "istockphoto-1591572504-612x612",
+            "istockphoto-1592032621-612x612",
+            "istockphoto-1592477030-612x612",
+            "istockphoto-1593107546-612x612",
+            "istockphoto-1598859151-612x612",
+            "istockphoto-1600110300-612x612",
+            "istockphoto-1601160159-612x612",
+            "istockphoto-1603197513-612x612",
+            "istockphoto-1604139814-612x612",
+            "istockphoto-1604893942-612x612",
+            "istockphoto-1613944671-612x612",
+            "istockphoto-1615138341-612x612",
+            "istockphoto-1615877940-612x612",
+            "istockphoto-1618294960-612x612",
+            "istockphoto-1620328144-612x612",
+            "istockphoto-1621368942-612x612",
+            "istockphoto-1623015044-612x612",
+            "istockphoto-1623195356-612x612",
+            "istockphoto-1623412694-612x612",
+            "istockphoto-1625487330-612x612",
+            "istockphoto-1626847801-612x612",
+            "istockphoto-1626847805-612x612",
+            "istockphoto-1627441710-612x612",
+            "istockphoto-1629539671-612x612",
+            "istockphoto-1629900571-612x612",
+            "istockphoto-1629901654-612x612",
+            "istockphoto-1630357631-612x612",
+            "istockphoto-1631731459-612x612",
+            "istockphoto-1632197496-612x612",
+            "istockphoto-1632956970-612x612",
+            "istockphoto-1633451485-612x612",
+            "istockphoto-1634303698-612x612",
+            "istockphoto-1636022764-612x612",
+            "istockphoto-1636128851-612x612",
+            "istockphoto-1636332638-612x612",
+            "istockphoto-163641275-612x612",
+            "istockphoto-1637548561-612x612",
+            "istockphoto-1637948721-612x612",
+            "istockphoto-1637955231-612x612",
+            "istockphoto-164190547-612x612",
+            "istockphoto-1644933382-612x612",
+            "istockphoto-1647824398-612x612",
+            "istockphoto-1647949106-612x612",
+            "istockphoto-1648212460-612x612",
+            "istockphoto-1649042184-612x612",
+            "istockphoto-1649298440-612x612",
+            "istockphoto-1654941191-612x612",
+            "istockphoto-1659762573-612x612",
+            "istockphoto-1659865843-612x612",
+            "istockphoto-1661022867-612x612",
+            "istockphoto-1662332243-612x612",
+            "istockphoto-1663270557-612x612",
+            "istockphoto-1667655651-612x612",
+            "istockphoto-1668066413-612x612",
+            "istockphoto-1669650975-612x612",
+            "istockphoto-1672898572-612x612",
+            "istockphoto-1673561969-612x612",
+            "istockphoto-1677788622-612x612",
+            "istockphoto-1677943597-612x612",
+            "istockphoto-1677999104-612x612",
+            "istockphoto-1678451227-612x612",
+            "istockphoto-1678643421-612x612",
+            "istockphoto-1680182911-612x612",
+            "istockphoto-1682079382-612x612",
+            "istockphoto-1682792061-612x612",
+            "istockphoto-1685139190-612x612",
+            "istockphoto-1690938438-612x612",
+            "istockphoto-1693245839-612x612",
+            "istockphoto-1695161321-612x612",
+            "istockphoto-1695742922-612x612",
+            "istockphoto-1696454489-612x612",
+            "istockphoto-1697457003-612x612",
+            "istockphoto-1698265778-612x612",
+            "istockphoto-1700628471-612x612",
+            "istockphoto-1700731268-612x612",
+            "istockphoto-1701041547-612x612",
+            "istockphoto-1701129398-612x612",
+            "istockphoto-1704187688-612x612",
+            "istockphoto-1704271226-612x612",
+            "istockphoto-1707510308-612x612",
+            "istockphoto-1708660512-612x612",
+            "istockphoto-1710260288-612x612",
+            "istockphoto-1713347420-612x612",
+            "istockphoto-1713368220-612x612",
+            "istockphoto-1715139919-612x612",
+            "istockphoto-171588946-612x612",
+            "istockphoto-1717078655-612x612",
+            "istockphoto-1717414539-612x612",
+            "istockphoto-1717574440-612x612",
+            "istockphoto-1718330602-612x612",
+            "istockphoto-1718650567-612x612",
+            "istockphoto-1719539154-612x612",
+            "istockphoto-1720195458-612x612",
+            "istockphoto-1720206372-612x612",
+            "istockphoto-1721143999-612x612",
+            "istockphoto-1722662593-612x612",
+            "istockphoto-1722884874-612x612",
+            "istockphoto-1725084491-612x612",
+            "istockphoto-1726488203-612x612",
+            "istockphoto-172713111-612x612",
+            "istockphoto-1727744547-612x612",
+            "istockphoto-1727831783-612x612",
+            "istockphoto-1729257386-612x612",
+            "istockphoto-1735090175-612x612",
+            "istockphoto-1735148159-612x612",
+            "istockphoto-1737003381-612x612",
+            "istockphoto-1738887156-612x612",
+            "istockphoto-1741405690-612x612",
+            "istockphoto-1747106031-612x612",
+            "istockphoto-174766622-612x612",
+            "istockphoto-174994883-612x612",
+            "istockphoto-1751941022-612x612",
+            "istockphoto-1753098384-612x612",
+            "istockphoto-1754361773-612x612",
+            "istockphoto-1754649058-612x612",
+            "istockphoto-175492267-612x612",
+            "istockphoto-1755578861-612x612",
+            "istockphoto-1758229029-612x612",
+            "istockphoto-1758838085-612x612",
+            "istockphoto-1759774797-612x612",
+            "istockphoto-1759892677-612x612",
+            "istockphoto-1760627013-612x612",
+            "istockphoto-1761327329-612x612",
+            "istockphoto-1761797030-612x612",
+            "istockphoto-1764773752-612x612",
+            "istockphoto-1765946013-612x612",
+            "istockphoto-1766257164-612x612",
+            "istockphoto-1766368159-612x612",
+            "istockphoto-1768777433-612x612",
+            "istockphoto-1770109295-612x612",
+            "istockphoto-1772651490-612x612",
+            "istockphoto-1775305741-612x612",
+            "istockphoto-1775364120-612x612",
+            "istockphoto-1776498633-612x612",
+            "istockphoto-1777247610-612x612",
+            "istockphoto-1777961846-612x612",
+            "istockphoto-1777995767-612x612",
+            "istockphoto-1778184150-612x612",
+            "istockphoto-1781649211-612x612",
+            "istockphoto-1782848258-612x612",
+            "istockphoto-1783409338-612x612",
+            "istockphoto-1783844521-612x612",
+            "istockphoto-1785594189-612x612",
+            "istockphoto-1788198844-612x612",
+            "istockphoto-1788291105-612x612",
+            "istockphoto-1791690515-612x612",
+            "istockphoto-1791891433-612x612",
+            "istockphoto-1796178313-612x612",
+            "istockphoto-1797952909-612x612",
+            "istockphoto-1798234172-612x612",
+            "istockphoto-1799319924-612x612",
+            "istockphoto-1800733098-612x612",
+            "istockphoto-1804975122-612x612",
+            "istockphoto-1805673013-612x612",
+            "istockphoto-1805849861-612x612",
+            "istockphoto-1806153068-612x612",
+            "istockphoto-1806459502-612x612",
+            "istockphoto-1808584897-612x612",
+            "istockphoto-1809144083-612x612",
+            "istockphoto-1809182941-612x612",
+            "istockphoto-1809899503-612x612",
+            "istockphoto-1810971282-612x612",
+            "istockphoto-1811278606-612x612",
+            "istockphoto-1811502067-612x612",
+            "istockphoto-1811525785-612x612",
+            "istockphoto-1812368315-612x612",
+            "istockphoto-1813018514-612x612",
+            "istockphoto-1815065065-612x612",
+            "istockphoto-1818578219-612x612",
+            "istockphoto-181877933-612x612",
+            "istockphoto-1819918196-612x612",
+            "istockphoto-1820641054-612x612",
+            "istockphoto-1823420285-612x612",
+            "istockphoto-1825777451-612x612",
+            "istockphoto-1827594466-612x612",
+            "istockphoto-1828699365-612x612",
+            "istockphoto-183346577-612x612",
+            "istockphoto-1837427898-612x612",
+            "istockphoto-183751454-612x612",
+            "istockphoto-1838350607-612x612",
+            "istockphoto-1842669894-612x612",
+            "istockphoto-1842963920-612x612",
+            "istockphoto-1843636708-612x612",
+            "istockphoto-1844896295-612x612",
+            "istockphoto-184601450-612x612",
+            "istockphoto-1847548352-612x612",
+            "istockphoto-1848471043-612x612",
+            "istockphoto-1849016919-612x612",
+            "istockphoto-185058645-612x612",
+            "istockphoto-1857301610-612x612",
+            "istockphoto-1859810236-612x612",
+            "istockphoto-1859862061-612x612",
+            "istockphoto-1861907611-612x612",
+            "istockphoto-1862807094-612x612",
+            "istockphoto-1864406121-612x612",
+            "istockphoto-1865004801-612x612",
+            "istockphoto-1865234059-612x612",
+            "istockphoto-186768677-612x612",
+            "istockphoto-1868329601-612x612",
+            "istockphoto-186873336-612x612",
+            "istockphoto-1869171847-612x612",
+            "istockphoto-1869650106-612x612",
+            "istockphoto-1869916912-612x612",
+            "istockphoto-1870369563-612x612",
+            "istockphoto-1870730604-612x612",
+            "istockphoto-1872274401-612x612",
+            "istockphoto-187241544-612x612",
+            "istockphoto-1872450054-612x612",
+            "istockphoto-1873560397-612x612",
+            "istockphoto-1874147409-612x612",
+            "istockphoto-1874242122-612x612",
+            "istockphoto-1875052945-612x612",
+            "istockphoto-187656736-612x612",
+            "istockphoto-1879119982-612x612",
+            "istockphoto-1882622177-612x612",
+            "istockphoto-1883230015-612x612",
+            "istockphoto-1883408710-612x612",
+            "istockphoto-1885866215-612x612",
+            "istockphoto-1886310205-612x612",
+            "istockphoto-1886778780-612x612",
+            "istockphoto-1887469204-612x612",
+            "istockphoto-1890897776-612x612",
+            "istockphoto-1894051230-612x612",
+            "istockphoto-1894241469-612x612",
+            "istockphoto-1894926174-612x612",
+            "istockphoto-1899531815-612x612",
+            "istockphoto-1899639335-612x612",
+            "istockphoto-1903423742-612x612",
+            "istockphoto-1904465273-612x612",
+            "istockphoto-1904641514-612x612",
+            "istockphoto-1908199050-612x612",
+            "istockphoto-1908249816-612x612",
+            "istockphoto-1909513611-612x612",
+            "istockphoto-1909936550-612x612",
+            "istockphoto-1911666393-612x612",
+            "istockphoto-1911745019-612x612",
+            "istockphoto-1915382108-612x612",
+            "istockphoto-1916729901-612x612",
+            "istockphoto-1917054502-612x612",
+            "istockphoto-1917481848-612x612",
+            "istockphoto-1918987312-612x612",
+            "istockphoto-1920054538-612x612",
+            "istockphoto-1922234109-612x612",
+            "istockphoto-1922482396-612x612",
+            "istockphoto-1924137135-612x612",
+            "istockphoto-1927102839-612x612",
+            "istockphoto-1931271642-612x612",
+            "istockphoto-1933038371-612x612",
+            "istockphoto-1933039407-612x612",
+            "istockphoto-1933216911-612x612",
+            "istockphoto-1934634258-612x612",
+            "istockphoto-1935990338-612x612",
+            "istockphoto-1937061874-612x612",
+            "istockphoto-1937173368-612x612",
+            "istockphoto-1937536154-612x612",
+            "istockphoto-1937714695-612x612",
+            "istockphoto-1938286323-612x612",
+            "istockphoto-1939188158-612x612",
+            "istockphoto-1939502403-612x612",
+            "istockphoto-1939649518-612x612",
+            "istockphoto-1942295986-612x612",
+            "istockphoto-1942453302-612x612",
+            "istockphoto-1942627379-612x612",
+            "istockphoto-1942678905-612x612",
+            "istockphoto-1942685818-612x612",
+            "istockphoto-1943098150-612x612",
+            "istockphoto-1943763192-612x612",
+            "istockphoto-1943785356-612x612",
+            "istockphoto-1944200411-612x612",
+            "istockphoto-1945021282-612x612",
+            "istockphoto-1945082957-612x612",
+            "istockphoto-1946360016-612x612",
+            "istockphoto-1946361629-612x612",
+            "istockphoto-1946362695-612x612",
+            "istockphoto-1949191980-612x612",
+            "istockphoto-1952253409-612x612",
+            "istockphoto-1953299113-612x612",
+            "istockphoto-1954459695-612x612",
+            "istockphoto-1954740740-612x612",
+            "istockphoto-1957099222-612x612",
+            "istockphoto-1957822303-612x612",
+            "istockphoto-1959080266-612x612",
+            "istockphoto-1959495244-612x612",
+            "istockphoto-1959708775-612x612",
+            "istockphoto-1960168721-612x612",
+            "istockphoto-1960615403-612x612",
+            "istockphoto-1960668820-612x612",
+            "istockphoto-1960974311-612x612",
+            "istockphoto-1962441295-612x612",
+            "istockphoto-1965111919-612x612",
+            "istockphoto-1968754374-612x612",
+            "istockphoto-1970145703-612x612",
+            "istockphoto-1970157164-612x612",
+            "istockphoto-1970475558-612x612",
+            "istockphoto-1977658120-612x612",
+            "istockphoto-1983487970-612x612",
+            "istockphoto-1984127891-612x612",
+            "istockphoto-1988844230-612x612",
+            "istockphoto-1989642152-612x612",
+            "istockphoto-1989688615-612x612",
+            "istockphoto-1991099600-612x612",
+            "istockphoto-1991831182-612x612",
+            "istockphoto-1991934907-612x612",
+            "istockphoto-1992219773-612x612",
+            "istockphoto-1993983703-612x612",
+            "istockphoto-1994420304-612x612",
+            "istockphoto-1995860804-612x612",
+            "istockphoto-1996587014-612x612",
+            "istockphoto-1999918927-612x612",
+            "istockphoto-2001793134-612x612",
+            "istockphoto-2004628823-612x612",
+            "istockphoto-2004890520-612x612",
+            "istockphoto-2006338804-612x612",
+            "istockphoto-2007470156-612x612",
+            "istockphoto-2007548662-612x612",
+            "istockphoto-2008692353-612x612",
+            "istockphoto-2009355398-612x612",
+            "istockphoto-2009359107-612x612",
+            "istockphoto-2010882401-612x612",
+            "istockphoto-2012813528-612x612",
+            "istockphoto-2014735311-612x612",
+            "istockphoto-2020419556-612x612",
+            "istockphoto-2022467703-612x612",
+            "istockphoto-2022470454-612x612",
+            "istockphoto-2022770565-612x612",
+            "istockphoto-2023653914-612x612",
+            "istockphoto-2025275041-612x612",
+            "istockphoto-2025426164-612x612",
+            "istockphoto-2025836701-612x612",
+            "istockphoto-2029982673-612x612",
+            "istockphoto-2030425448-612x612",
+            "istockphoto-2031340689-612x612",
+            "istockphoto-2032240867-612x612",
+            "istockphoto-2032958187-612x612",
+            "istockphoto-2032994085-612x612",
+            "istockphoto-2033161325-612x612",
+            "istockphoto-2033437718-612x612",
+            "istockphoto-2035484825-612x612",
+            "istockphoto-2037499267-612x612",
+            "istockphoto-2037990571-612x612",
+            "istockphoto-2038157082-612x612",
+            "istockphoto-2038457340-612x612",
+            "istockphoto-2042558072-612x612",
+            "istockphoto-2042631188-612x612",
+            "istockphoto-2043931633-612x612",
+            "istockphoto-2044066497-612x612",
+            "istockphoto-2045665743-612x612",
+            "istockphoto-2046650056-612x612",
+            "istockphoto-2047220331-612x612",
+            "istockphoto-2047335090-612x612",
+            "istockphoto-2048193685-612x612",
+            "istockphoto-2050253321-612x612",
+            "istockphoto-2055844146-612x612",
+            "istockphoto-2057973065-612x612",
+            "istockphoto-2058002828-612x612",
+            "istockphoto-2058319417-612x612",
+            "istockphoto-2058341644-612x612",
+            "istockphoto-2060505692-612x612",
+            "istockphoto-2060672983-612x612",
+            "istockphoto-2061616521-612x612",
+            "istockphoto-2064008759-612x612",
+            "istockphoto-2064196221-612x612",
+            "istockphoto-2065790995-612x612",
+            "istockphoto-2066047421-612x612",
+            "istockphoto-2067922475-612x612",
+            "istockphoto-2068428932-612x612",
+            "istockphoto-2071949575-612x612",
+            "istockphoto-2076674731-612x612",
+            "istockphoto-2076934092-612x612",
+            "istockphoto-2077560078-612x612",
+            "istockphoto-2081422163-612x612",
+            "istockphoto-2082206218-612x612",
+            "istockphoto-2084953049-612x612",
+            "istockphoto-2085724107-612x612",
+            "istockphoto-2085886419-612x612",
+            "istockphoto-2086229240-612x612",
+            "istockphoto-2086878449-612x612",
+            "istockphoto-2089234809-612x612",
+            "istockphoto-2093526842-612x612",
+            "istockphoto-2094337676-612x612",
+            "istockphoto-2096881914-612x612",
+            "istockphoto-2098364973-612x612",
+            "istockphoto-2098792891-612x612",
+            "istockphoto-2099403180-612x612",
+            "istockphoto-2099668042-612x612",
+            "istockphoto-2101302902-612x612",
+            "istockphoto-2103030947-612x612",
+            "istockphoto-2105035034-612x612",
+            "istockphoto-2107382054-612x612",
+            "istockphoto-2108707000-612x612",
+            "istockphoto-2111881702-612x612",
+            "istockphoto-2111967560-612x612",
+            "istockphoto-2112419626-612x612",
+            "istockphoto-2112991930-612x612",
+            "istockphoto-2114257458-612x612",
+            "istockphoto-2114986399-612x612",
+            "istockphoto-2118024278-612x612",
+            "istockphoto-2121353141-612x612",
+            "istockphoto-2122076165-612x612",
+            "istockphoto-2122131615-612x612",
+            "istockphoto-2122148349-612x612",
+            "istockphoto-2122753326-612x612",
+            "istockphoto-2128484831-612x612",
+            "istockphoto-2130313924-612x612",
+            "istockphoto-2130928501-612x612",
+            "istockphoto-2131001083-612x612",
+            "istockphoto-2137309041-612x612",
+            "istockphoto-2138983054-612x612",
+            "istockphoto-2140267703-612x612",
+            "istockphoto-2141477319-612x612",
+            "istockphoto-2147496686-612x612",
+            "istockphoto-2147595648-612x612",
+            "istockphoto-2147671642-612x612",
+            "istockphoto-2148043982-612x612",
+            "istockphoto-2148113350-612x612",
+            "istockphoto-2148124381-612x612",
+            "istockphoto-2148188062-612x612",
+            "istockphoto-2148244904-612x612",
+            "istockphoto-2148247016-612x612",
+            "istockphoto-2148331844-612x612",
+            "istockphoto-2148419361-612x612",
+            "istockphoto-2148448857-612x612",
+            "istockphoto-2148530198-612x612",
+            "istockphoto-2148601684-612x612",
+            "istockphoto-2148633856-612x612",
+            "istockphoto-2148645496-612x612",
+            "istockphoto-2148703154-612x612",
+            "istockphoto-2148717788-612x612",
+            "istockphoto-2148752786-612x612",
+            "istockphoto-2148905175-612x612",
+            "istockphoto-2149024765-612x612",
+            "istockphoto-2149028924-612x612",
+            "istockphoto-2149038717-612x612",
+            "istockphoto-2149080406-612x612",
+            "istockphoto-2149194584-612x612",
+            "istockphoto-2149320358-612x612",
+            "istockphoto-2149497629-612x612",
+            "istockphoto-2149521043-612x612",
+            "istockphoto-2149530993-612x612",
+            "istockphoto-2149531021-612x612",
+            "istockphoto-2149589435-612x612",
+            "istockphoto-2149633075-612x612",
+            "istockphoto-2149749922-612x612",
+            "istockphoto-2149866330-612x612",
+            "istockphoto-2149936831-612x612",
+            "istockphoto-2149973586-612x612",
+            "istockphoto-2150381046-612x612",
+            "istockphoto-2150391897-612x612",
+            "istockphoto-2150402008-612x612",
+            "istockphoto-2150808144-612x612",
+            "istockphoto-2150831290-612x612",
+            "istockphoto-2150857542-612x612",
+            "istockphoto-2151093474-612x612",
+            "istockphoto-2151210808-612x612",
+            "istockphoto-2151238805-612x612",
+            "istockphoto-2151625435-612x612",
+            "istockphoto-2151669184-612x612",
+            "istockphoto-2151678841-612x612",
+            "istockphoto-2151877394-612x612",
+            "istockphoto-2151912551-612x612",
+            "istockphoto-2152032515-612x612",
+            "istockphoto-2152087248-612x612",
+            "istockphoto-2152193820-612x612",
+            "istockphoto-2152239259-612x612",
+            "istockphoto-2152773304-612x612",
+            "istockphoto-2153261979-612x612",
+            "istockphoto-2153792629-612x612",
+            "istockphoto-2153823097-612x612",
+            "istockphoto-2153927815-612x612",
+            "istockphoto-2154150542-612x612",
+            "istockphoto-2154640765-612x612",
+            "istockphoto-2154707821-612x612",
+            "istockphoto-2154752387-612x612",
+            "istockphoto-2154917134-612x612",
+            "istockphoto-2154983904-612x612",
+            "istockphoto-2155120707-612x612",
+            "istockphoto-2155337521-612x612",
+            "istockphoto-2155397266-612x612",
+            "istockphoto-2155777642-612x612",
+            "istockphoto-2155980786-612x612",
+            "istockphoto-2156936284-612x612",
+            "istockphoto-2157568906-612x612",
+            "istockphoto-2159023552-612x612",
+            "istockphoto-2159123452-612x612",
+            "istockphoto-2160024704-612x612",
+            "istockphoto-2160099663-612x612",
+            "istockphoto-2160695759-612x612",
+            "istockphoto-2160701998-612x612",
+            "istockphoto-2160934201-612x612",
+            "istockphoto-2160994977-612x612",
+            "istockphoto-2162033406-612x612",
+            "istockphoto-2162212205-612x612",
+            "istockphoto-2163132165-612x612",
+            "istockphoto-2163475058-612x612",
+            "istockphoto-2166545032-612x612",
+            "istockphoto-2166964064-612x612",
+            "istockphoto-458636507-612x612",
+            "istockphoto-469916896-612x612",
+            "istockphoto-472107952-612x612",
+            "istockphoto-474611052-612x612",
+            "istockphoto-476534798-612x612",
+            "istockphoto-490772286-612x612",
+            "istockphoto-491242324-612x612",
+            "istockphoto-492850318-612x612",
+            "istockphoto-493916119-612x612",
+            "istockphoto-497417426-612x612",
+            "istockphoto-517252335-612x612",
+            "istockphoto-519558070-612x612",
+            "istockphoto-529982024-612x612",
+            "istockphoto-534079149-612x612",
+            "istockphoto-538777150-612x612",
+            "istockphoto-599494684-612x612",
+            "istockphoto-604383296-612x612",
+            "istockphoto-606655694-612x612",
+            "istockphoto-615714416-612x612",
+            "istockphoto-639440474-612x612",
+            "istockphoto-665181876-612x612",
+            "istockphoto-671783136-612x612",
+            "istockphoto-671909526-612x612",
+            "istockphoto-683962492-612x612",
+            "istockphoto-685841460-612x612",
+            "istockphoto-691240852-612x612",
+            "istockphoto-697875122-612x612",
+            "istockphoto-803944404-612x612",
+            "istockphoto-804661366-612x612",
+            "istockphoto-817156930-612x612",
+            "istockphoto-840960958-612x612",
+            "istockphoto-862291202-612x612",
+            "istockphoto-876903046-612x612",
+            "istockphoto-883019546-612x612",
+            "istockphoto-897079662-612x612",
+            "istockphoto-899796524-612x612",
+            "istockphoto-909446388-612x612",
+            "istockphoto-912142450-612x612",
+            "istockphoto-920931664-612x612",
+            "istockphoto-939244834-612x612",
+            "istockphoto-939317686-612x612",
+            "istockphoto-940099740-612x612",
+            "istockphoto-955272340-612x612",
+            "istockphoto-95736398-612x612",
+            "istockphoto-960153998-612x612",
+            "istockphoto-960986420-612x612",
+        ];
 
         // Funktion zum Setzen des Hero-Bildes
         function setHeroImage() {
@@ -666,7 +1565,7 @@
                 case 'image-left-bullets-right':
                     const imagePoints = content.split('\n').map(point => `<li>${point}</li>`).join('');
                     slideHTML = isPresentationMode ?
-                        `<div><h2>${title}</h2><div class="content-wrapper"><div style="flex: 1; padding-right: 2rem;"><ul style="list-style-position: inside; padding-left: 1.5rem; font-size: 1.6rem;">${imagePoints}</ul></div><div style="flex: 1; padding-left: 2rem;"><img src="${image}" alt="Bild"></div></div></div>` :
+                        `<div><h2>${title}</h2><div class="content-wrapper"><div style="flex: 1; padding: 1rem;"><ul style="list-style-position: inside; padding-left: 1.5rem; font-size: 1.8rem;">${imagePoints}</ul></div><div style="flex: 1; padding: 1rem;"><img src="${image}" alt="Bild"></div></div></div>` :
                         `<div style="display: flex; flex-wrap: wrap; align-items: flex-start;"><div style="flex: 1; min-width: 250px; padding-right: 1rem;"><h2 style="font-size: 2rem; margin-bottom: 1rem;">${title}</h2><ul style="list-style-position: inside; padding-left: 1.5rem; margin-top: 1rem;">${imagePoints}</ul></div><div style="flex: 1; min-width: 250px; padding-left: 1rem;"><img src="${image}" alt="Bild" style="width: 100%; border-radius: 8px;"></div></div>`;
                     break;
                 case 'image-only':
@@ -884,7 +1783,7 @@
         function copyToClipboard() {
             const code = document.getElementById('presentation-code').value;
             navigator.clipboard.writeText(code).then(() => {
-                // alert entfernt
+                // Erfolg, keine Aktion
             }).catch(err => {
                 console.error('Fehler beim Kopieren: ', err);
             });
@@ -938,7 +1837,7 @@
                     presentationContainer.appendChild(slideContainer);
                 });
             } catch (error) {
-                // alert entfernt
+                console.error('Fehler beim Importieren des Codes:', error);
             }
         }
 
@@ -946,7 +1845,7 @@
         function pasteFromClipboard() {
             navigator.clipboard.readText().then(text => {
                 document.getElementById('import-code').value = text;
-                // alert entfernt
+                // Erfolgreich eingefügt
             }).catch(err => {
                 console.error('Fehler beim Einfügen: ', err);
             });
@@ -957,6 +1856,50 @@
             document.querySelector(target).scrollIntoView({
                 behavior: 'smooth'
             });
+        }
+
+        // Funktionen zur Bilderauswahl
+
+        let currentInputId = null; // ID des aktuellen Eingabefelds
+
+        function openImageModal(inputId) {
+            currentInputId = inputId;
+            document.getElementById('imageModal').style.display = 'flex';
+            populateImageGrid();
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+            currentInputId = null;
+        }
+
+        function populateImageGrid() {
+            const imageGrid = document.getElementById('imageGrid');
+            imageGrid.innerHTML = ''; // Leeren
+
+            imageFilenames.forEach(filename => {
+                const img = document.createElement('img');
+                img.src = `images/${filename}.jpg`; // Annahme: Bilder sind im Ordner 'images/' und haben die Erweiterung .jpg
+                img.alt = filename;
+                img.title = filename;
+                img.onclick = () => selectImage(`images/${filename}.jpg`);
+                imageGrid.appendChild(img);
+            });
+        }
+
+        function selectImage(imageUrl) {
+            if (currentInputId) {
+                document.getElementById(currentInputId).value = imageUrl;
+            }
+            closeImageModal();
+        }
+
+        // Event Listener zum Schließen des Modals, wenn außerhalb des Inhalts geklickt wird
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                closeImageModal();
+            }
         }
     </script>
 </body>
