@@ -8,293 +8,1119 @@
 <style>
 :root{
   --bg:#ffffff;
-  --text:#1d1d1f;
-  --muted:#6e6e73;
-  --accent:#b65a2a;
-  --card:#f5f5f7;
-  --radius:16px;
-  --max:980px;
+  --surface:#ffffff;
+  --surface2:#f6f7fb;
+  --text:#111318;
+  --muted:#5e6472;
+  --line:rgba(17,19,24,.10);
+  --shadow:0 18px 50px rgba(17,19,24,.10);
+  --radius:18px;
+  --max:1040px;
+  --accent:#ff6a3d;
+  --accent2:#6b5cff;
 }
 
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:var(--bg);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color:var(--text);
+  background:
+    radial-gradient(1200px 700px at 15% -15%, rgba(107,92,255,.08), transparent 60%),
+    radial-gradient(1000px 600px at 100% 10%, rgba(255,106,61,.08), transparent 55%),
+    var(--bg);
   line-height:1.6;
 }
 
-.dark{
-  --bg:#0b0b0c;
-  --text:#f5f5f7;
-  --muted:#b7b7bd;
-  --card:#151517;
+body.dark{
+  --bg:#0c0f14;
+  --surface:#0f131a;
+  --surface2:#0b0e13;
+  --text:#f2f4f7;
+  --muted:#aab1bf;
+  --line:rgba(255,255,255,.10);
+  --shadow:0 18px 60px rgba(0,0,0,.50);
+  background:
+    radial-gradient(1200px 700px at 15% -15%, rgba(107,92,255,.20), transparent 60%),
+    radial-gradient(1000px 600px at 100% 10%, rgba(255,106,61,.16), transparent 55%),
+    var(--bg);
 }
+
+a{color:inherit;text-decoration:none}
+a:hover{opacity:.9}
+
+.wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 96px}
 
 #progress{
   position:fixed;
-  top:0;
-  left:0;
+  top:0;left:0;
   height:3px;
-  background:var(--accent);
   width:0%;
-  z-index:100;
-}
-
-.wrap{
-  max-width:var(--max);
-  margin:auto;
-  padding:30px 20px;
+  background:linear-gradient(90deg,var(--accent2),var(--accent));
+  z-index:1000;
 }
 
 header{
   position:sticky;
   top:0;
-  background:white;
-  border-bottom:1px solid #eee;
+  z-index:900;
+  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  border-bottom:1px solid var(--line);
 }
 
 .nav{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:14px 18px;
   display:grid;
-  grid-template-columns:1fr auto 1fr;
+  grid-template-columns: 1fr auto 1fr;
   align-items:center;
-  padding:12px 20px;
+  gap:14px;
 }
 
-.navCenter{
+.brand{
   display:flex;
-  gap:12px;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  letter-spacing:.2px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  background: color-mix(in srgb, var(--surface2) 70%, transparent);
+  border:1px solid var(--line);
+}
+
+.pillbar{
+  display:flex;
+  gap:10px;
   justify-content:center;
+  flex-wrap:wrap;
 }
 
 .pill{
-  background:#eee;
-  padding:6px 12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:36px;
+  min-width:112px;
+  padding:0 14px;
   border-radius:999px;
+  border:1px solid var(--line);
+  background: color-mix(in srgb, var(--surface2) 70%, transparent);
+  font-weight:750;
+  transition: transform .14s ease, background .14s ease, border-color .14s ease;
 }
 
-.hero img{
-  width:100%;
-  border-radius:16px;
+.pill:hover{transform: translateY(-1px)}
+.pill.active{
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface) 86%);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line) 60%);
 }
 
-.section{
-  margin-top:40px;
+.navRight{
+  display:flex;
+  gap:10px;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:36px;
+  padding:0 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background: color-mix(in srgb, var(--surface2) 70%, transparent);
+  font-weight:850;
+  cursor:pointer;
+  transition: transform .14s ease, background .14s ease;
+}
+
+.btn:hover{transform: translateY(-1px)}
+.btn.primary{
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--accent2) 22%, var(--surface) 78%),
+    color-mix(in srgb, var(--accent) 18%, var(--surface) 82%)
+  );
+}
+
+@media (max-width: 900px){
+  .nav{grid-template-columns:1fr; gap:10px}
+  .navRight{justify-content:flex-start}
 }
 
 .card{
-  background:var(--card);
-  padding:18px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border:1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.hero{
+  padding:40px 0 14px;
+  display:grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap:14px;
+  align-items:stretch;
+}
+
+@media (max-width: 900px){
+  .hero{grid-template-columns:1fr}
+}
+
+.heroLeft{padding:22px 20px}
+h1{
+  margin:0 0 10px;
+  font-size: clamp(38px, 6vw, 68px);
+  line-height:1.04;
+  letter-spacing:-.8px;
+}
+
+.sub{
+  margin:0 0 16px;
+  color:var(--muted);
+  font-size: 17px;
+  max-width: 70ch;
+}
+
+.heroActions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+
+.kpis{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:10px;
+  margin-top:14px;
+}
+
+@media (max-width: 520px){
+  .kpis{grid-template-columns:1fr}
+}
+
+.kpi{
+  padding:12px 12px;
   border-radius:16px;
+  border:1px solid var(--line);
+  background: color-mix(in srgb, var(--surface2) 55%, transparent);
+}
+
+.kpi .t{font-weight:950}
+.kpi .d{color:var(--muted); font-size:13px; margin-top:4px}
+
+.heroMedia{
+  overflow:hidden;
+  position:relative;
+  cursor: zoom-in;
+}
+
+.heroMedia img{
+  width:100%;
+  height:100%;
+  min-height: 320px;
+  object-fit:cover;
+  display:block;
+}
+
+.heroMedia .overlay{
+  position:absolute;
+  inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.45));
+}
+
+.heroMedia .cap{
+  position:absolute;
+  left:16px;
+  bottom:16px;
+  right:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 12px;
+  border-radius:999px;
+  border:1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  background: rgba(0,0,0,.25);
+  color:#fff;
+  font-weight:850;
+}
+
+.section{
+  padding: 22px 0 0;
+  scroll-margin-top: 96px;
+}
+
+.secHead{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+  margin: 10px 0 12px;
+}
+
+h2{
+  margin:0;
+  font-size: 30px;
+  letter-spacing:-.2px;
+}
+
+.lead{
+  margin:0;
+  color:var(--muted);
+  max-width: 82ch;
+}
+
+.panel{padding:18px}
+.columns{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px;
+  align-items:start;
+}
+
+@media (max-width: 900px){
+  .columns{grid-template-columns:1fr}
+}
+
+.list{margin:10px 0 0; padding-left:18px}
+.list li{margin:6px 0}
+
+.galleryWrap{padding:16px}
+.galleryTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+
+.galleryControls{display:flex; gap:10px; align-items:center}
+
+.gbtn{
+  width:44px; height:36px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background: color-mix(in srgb, var(--surface2) 70%, transparent);
+  color:var(--text);
+  cursor:pointer;
+  font-weight:950;
+}
+
+.gbtn:disabled{opacity:.35; cursor:not-allowed}
+
+.ginfo{
+  min-width:84px;
+  text-align:center;
+  color:var(--muted);
+  font-weight:850;
 }
 
 .gallery{
+  border-radius: 16px;
   overflow:hidden;
-  border-radius:16px;
+  background:#000;
+  border:1px solid var(--line);
+  touch-action: pan-y;
+  position:relative;
 }
 
 .track{
   display:flex;
-  transition:.3s;
+  width:100%;
+  transform: translateX(0%);
+  transition: transform .28s ease;
 }
 
 .slide{
   min-width:100%;
+  margin:0;
+  position:relative;
+  user-select:none;
+  cursor: zoom-in;
 }
 
 .slide img{
   width:100%;
-  height:350px;
+  height: 440px;
   object-fit:cover;
+  display:block;
+  background:#111;
 }
 
-.galleryControls{
+@media (max-width: 900px){
+  .slide img{height: 320px}
+}
+
+.slide figcaption{
+  position:absolute;
+  left:14px;
+  bottom:14px;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.40);
+  color:#fff;
+  font-weight:850;
+  font-size:13px;
+}
+
+.dots{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-top:10px;
+}
+
+.dot{
+  width:10px; height:10px;
+  border-radius:999px;
+  border:0;
+  background: color-mix(in srgb, var(--muted) 40%, transparent);
+  cursor:pointer;
+}
+
+.dot.on{background: linear-gradient(90deg,var(--accent2),var(--accent))}
+
+.hintRow{
   display:flex;
   gap:10px;
-  align-items:center;
+  flex-wrap:wrap;
+  margin-top:10px;
+  color:var(--muted);
+  font-size:13px;
 }
+
+.hintPill{
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background: color-mix(in srgb, var(--surface2) 55%, transparent);
+}
+
+.details{
+  margin-top: 12px;
+  border:1px solid var(--line);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface2) 55%, transparent);
+  overflow:hidden;
+}
+
+details{padding:12px 14px}
+summary{
+  cursor:pointer;
+  font-weight:900;
+  list-style:none;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{
+  content:"＋";
+  float:right;
+  color:var(--muted);
+}
+details[open] summary::after{content:"－"}
+.details p{margin:10px 0 0; color:var(--muted)}
+
+.quiz{
+  margin-top: 14px;
+  padding:14px;
+  border-radius: 16px;
+  border:1px solid var(--line);
+  background: color-mix(in srgb, var(--surface2) 55%, transparent);
+}
+
+.quiz h3{margin:0 0 8px; font-size:16px}
+.qtext{font-weight:950; margin:0 0 8px}
+.opt{display:block; margin:8px 0}
+.opt input{transform: translateY(1px); margin-right:8px}
+
+.feedback{margin-top:10px; font-weight:950}
+.feedback.ok{color: #2bd97c}
+.feedback.bad{color: #ff5d5d}
 
 .ytgrid{
   display:grid;
-  gap:14px;
-  grid-template-columns:1fr;
-  margin-top:20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap:12px;
+  margin-top:14px;
 }
 
-iframe{
-  width:100%;
-  height:300px;
+@media (max-width: 980px){
+  .ytgrid{grid-template-columns:1fr}
 }
+
+.ytcard{
+  padding:14px;
+  border-radius: 16px;
+  border:1px solid var(--line);
+  background: color-mix(in srgb, var(--surface2) 55%, transparent);
+}
+
+.ytTitle{font-weight:950; margin:0 0 10px}
+.yt{
+  border-radius: 14px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  aspect-ratio: 16 / 9;
+  background:#000;
+}
+.yt iframe{width:100%; height:100%; border:0; display:block}
 
 #toTop{
   position:fixed;
-  right:20px;
-  bottom:20px;
-  background:black;
-  color:white;
-  border-radius:999px;
-  padding:10px;
+  right:16px;
+  bottom:16px;
+  border:1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 75%, transparent);
+  color: var(--text);
+  border-radius: 999px;
+  height: 42px;
+  padding: 0 14px;
+  cursor:pointer;
   opacity:0;
+  transform: translateY(8px);
+  transition: .18s ease;
+  z-index:1200;
 }
 
-#toTop.show{
-  opacity:1;
+#toTop.show{opacity:1; transform: translateY(0)}
+
+.lightbox{
+  position:fixed;
+  inset:0;
+  display:none;
+  place-items:center;
+  background: rgba(0,0,0,.78);
+  z-index:2000;
+  padding:18px;
+}
+
+.lightbox.open{display:grid}
+.lightbox img{
+  max-width: min(100%, 1060px);
+  max-height: 82vh;
+  border-radius: 18px;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow: 0 28px 80px rgba(0,0,0,.55);
+  background:#111;
+}
+
+.lightbox .lbTop{
+  position:absolute;
+  top:14px;
+  right:14px;
+  display:flex;
+  gap:10px;
+}
+
+.lbBtn{
+  border:1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.35);
+  color: #fff;
+  border-radius: 999px;
+  height: 38px;
+  padding: 0 14px;
+  cursor:pointer;
+  font-weight:950;
+}
+
+.reveal{
+  opacity:0;
+  transform: translateY(10px);
+  transition: opacity .45s ease, transform .45s ease;
+}
+.reveal.on{opacity:1; transform: translateY(0)}
+
+footer{
+  margin-top: 36px;
+  padding-top: 14px;
+  border-top:1px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
 }
 </style>
 </head>
 
 <body>
-
 <div id="progress"></div>
 
 <header>
-<div class="nav">
-<div>Perú</div>
+  <div class="nav">
+    <div class="brand">
+      <span class="badge">Perú</span>
+      <span style="color:var(--muted); font-weight:800">Arte, música y lenguas</span>
+    </div>
 
-<div class="navCenter">
-<a href="#arte" class="pill">Arte</a>
-<a href="#musica" class="pill">Música</a>
-<a href="#lenguas" class="pill">Lenguas</a>
-</div>
+    <nav class="pillbar" aria-label="Navegación">
+      <a class="pill navlink" href="#arte" data-target="arte">Arte</a>
+      <a class="pill navlink" href="#musica" data-target="musica">Música</a>
+      <a class="pill navlink" href="#lenguas" data-target="lenguas">Lenguas</a>
+    </nav>
 
-<div style="text-align:right">
-<span class="pill">Paul Liechti</span>
-<button id="toggleMode" class="pill">Modo</button>
-</div>
-</div>
+    <div class="navRight">
+      <span class="badge">Paul Liechti</span>
+      <button class="btn primary" id="toggleTheme" type="button">Tema</button>
+    </div>
+  </div>
 </header>
 
 <main class="wrap">
 
-<section class="hero">
-<h1>Perú</h1>
-<p>Arte, música y lenguas. Una página interactiva sobre la cultura del Perú.</p>
-<img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1800&q=70">
-</section>
+  <section class="hero">
+    <div class="card heroLeft reveal">
+      <h1>Perú</h1>
+      <p class="sub">
+        Tres temas con un diseño limpio y funciones interactivas.
+        Galería con imágenes reales de arte y tres videos incrustados.
+      </p>
 
-<section class="section">
-<h2>Galería</h2>
+      <div class="heroActions">
+        <a class="btn" href="#arte">Ver arte</a>
+        <a class="btn" href="#musica">Ver videos</a>
+        <button class="btn" id="randomJump" type="button">Ir al azar</button>
+      </div>
 
-<div class="galleryControls">
-<button id="prevImg">←</button>
-<div id="galleryInfo">1 / 5</div>
-<button id="nextImg">→</button>
-</div>
+      <div class="kpis">
+        <div class="kpi"><div class="t">3</div><div class="d">temas</div></div>
+        <div class="kpi"><div class="t">5</div><div class="d">imágenes de arte</div></div>
+        <div class="kpi"><div class="t">3</div><div class="d">videos</div></div>
+      </div>
 
-<div class="gallery" id="gallery">
-<div class="track" id="track">
-<div class="slide"><img src="https://images.unsplash.com/photo-1548588680-46a4b1a26b84"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1520975958225-3f61d2f57f3d"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1526779259212-6f1f4e3cfc89"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1521337706264-a414f153a5b6"></div>
-</div>
-</div>
-</section>
+      <div class="details">
+        <details>
+          <summary>Cómo usar la página</summary>
+          <p>
+            Pulsa en las secciones, desliza la galería y toca una imagen para abrirla en grande.
+            En el ordenador también funcionan las teclas de flecha.
+          </p>
+        </details>
+      </div>
+    </div>
 
-<section class="section" id="arte">
-<h2>Arte en Perú</h2>
-<div class="card">
-<p>El arte en Perú tiene una historia muy larga. Empieza con las culturas antiguas como los incas. Ellos hacían esculturas, templos y objetos de oro y piedra.</p>
+    <div class="card heroMedia reveal" id="heroMedia">
+      <img id="heroImg"
+        src="https://1.bp.blogspot.com/-JWb900VtX3g/VtyBKELIE9I/AAAAAAAAL3o/lVMx5CkVdR4/s1600/dawnofeden.jpg"
+        alt="Arte del Perú">
+      <div class="overlay"></div>
+      <div class="cap">
+        <span class="tag">Toca para ampliar</span>
+        <span class="tag" id="clock">00.00</span>
+      </div>
+    </div>
+  </section>
 
-<p>En Perú también hay arte tradicional. Muchas personas hacen tejidos de colores con lana de alpaca. Estos tejidos muestran la cultura y la vida en los Andes.</p>
+  <section class="section reveal" id="arte">
+    <div class="secHead">
+      <div>
+        <h2>Arte en Perú</h2>
+        <p class="lead">
+          El arte en Perú tiene una historia muy larga. Empieza con las culturas antiguas como los incas.
+          Ellos hacían esculturas, templos y objetos de oro y piedra.
+        </p>
+      </div>
 
-<p>Hoy existe también arte moderno en ciudades como Lima. Los artistas pintan murales y cuadros sobre la historia y la sociedad de Perú.</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <button class="btn" id="arteFact" type="button">Dato</button>
+        <button class="btn" id="openArt" type="button">Abrir galería</button>
+      </div>
+    </div>
 
-<strong>Ejemplos de arte peruano</strong>
-<ul>
-<li>cerámica tradicional</li>
-<li>tejidos andinos</li>
-<li>arquitectura inca</li>
-<li>pintura moderna</li>
-</ul>
-</div>
-</section>
+    <div class="card panel columns">
+      <div>
+        <p>
+          En Perú también hay arte tradicional. Muchas personas hacen tejidos de colores con lana de alpaca.
+          Estos tejidos muestran la cultura y la vida en los Andes.
+        </p>
 
-<section class="section" id="musica">
-<h2>Música de Perú</h2>
-<div class="card">
-<p>La música peruana mezcla tradiciones indígenas, españolas y africanas.</p>
+        <p>
+          Hoy existe también arte moderno en ciudades como Lima. Los artistas pintan murales y cuadros sobre
+          la historia y la sociedad de Perú.
+        </p>
 
-<p>Un instrumento muy importante es la quena, una flauta andina. Otro instrumento es el charango, una guitarra pequeña.</p>
+        <div class="details">
+          <details>
+            <summary>Ejemplos de arte peruano</summary>
+            <ul class="list">
+              <li>cerámica tradicional</li>
+              <li>tejidos andinos</li>
+              <li>arquitectura inca</li>
+              <li>pintura moderna</li>
+            </ul>
+          </details>
+        </div>
 
-<p>En los Andes la música es tranquila y usa flautas y tambores. En la costa hay música más rápida y alegre.</p>
+        <p id="arteFactOut" style="margin:12px 0 0; color:var(--muted); font-weight:800"></p>
+      </div>
 
-<p>Un baile muy conocido es la Marinera. También es famosa la música andina con instrumentos tradicionales.</p>
+      <div class="card galleryWrap" style="box-shadow:none; background:transparent; border:none; padding:0">
+        <div class="galleryTop">
+          <div style="font-weight:950">Galería de arte</div>
+          <div class="galleryControls">
+            <button class="gbtn" id="prevImg" type="button" aria-label="Anterior">←</button>
+            <div class="ginfo" id="galleryInfo">1 / 5</div>
+            <button class="gbtn" id="nextImg" type="button" aria-label="Siguiente">→</button>
+          </div>
+        </div>
 
-<strong>Ejemplos de música peruana</strong>
-<ul>
-<li>música andina</li>
-<li>Marinera</li>
-<li>festejo</li>
-<li>huayno</li>
-</ul>
-</div>
+        <div class="gallery" id="gallery" aria-label="Galería de arte">
+          <div class="track" id="track">
+            <figure class="slide" data-full="https://1.bp.blogspot.com/-JWb900VtX3g/VtyBKELIE9I/AAAAAAAAL3o/lVMx5CkVdR4/s1600/dawnofeden.jpg">
+              <img src="https://1.bp.blogspot.com/-JWb900VtX3g/VtyBKELIE9I/AAAAAAAAL3o/lVMx5CkVdR4/s1600/dawnofeden.jpg" alt="Arte 1" loading="lazy">
+              <figcaption>Arte 1</figcaption>
+            </figure>
 
-<div class="ytgrid">
-<iframe src="https://www.youtube.com/embed/8eF4XfQ2h9I" allowfullscreen></iframe>
-<iframe src="https://www.youtube.com/embed/M5QGkOGZubQ" allowfullscreen></iframe>
-<iframe src="https://www.youtube.com/embed/EDwb9jOVRtU" allowfullscreen></iframe>
-</div>
-</section>
+            <figure class="slide" data-full="https://th.bing.com/th/id/OIP.yFVHZ2r5acyH10op4oWqrAHaEK?w=299&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3">
+              <img src="https://th.bing.com/th/id/OIP.yFVHZ2r5acyH10op4oWqrAHaEK?w=1200&h=720&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3" alt="Arte 2" loading="lazy">
+              <figcaption>Arte 2</figcaption>
+            </figure>
 
-<section class="section" id="lenguas">
-<h2>Lenguas en Perú</h2>
-<div class="card">
-<p>En Perú se hablan diferentes lenguas.</p>
-<p>La lengua principal es el español. La mayoría de las personas lo hablan todos los días.</p>
-<p>También existen lenguas indígenas. La más importante es el quechua, la lengua de los incas. Otra lengua es el aimara.</p>
-<p>Muchas personas en Perú hablan dos lenguas, por ejemplo español y quechua.</p>
+            <figure class="slide" data-full="https://i.pinimg.com/736x/e7/45/97/e7459714e59cc31491409fe4b17dc3c6.jpg">
+              <img src="https://i.pinimg.com/736x/e7/45/97/e7459714e59cc31491409fe4b17dc3c6.jpg" alt="Arte 3" loading="lazy">
+              <figcaption>Arte 3</figcaption>
+            </figure>
 
-<strong>Lenguas importantes en Perú</strong>
-<ul>
-<li>español</li>
-<li>quechua</li>
-<li>aimara</li>
-</ul>
-</div>
-</section>
+            <figure class="slide" data-full="https://images.artbrokerage.com/artthumb/valverde_166889_1/808x808/Rossmary_Valverde_Calle_De_Cuzco_2001_24x36__Peru.jpg">
+              <img src="https://images.artbrokerage.com/artthumb/valverde_166889_1/808x808/Rossmary_Valverde_Calle_De_Cuzco_2001_24x36__Peru.jpg" alt="Calle de Cuzco" loading="lazy">
+              <figcaption>Calle de Cuzco</figcaption>
+            </figure>
 
+            <figure class="slide" data-full="https://images.artbrokerage.com/artthumb/valverde_166889_1/808x808/Rossmary_Valverde_Calle_De_Cuzco_2001_24x36__Peru.jpg">
+              <img src="https://images.artbrokerage.com/artthumb/valverde_166889_1/808x808/Rossmary_Valverde_Calle_De_Cuzco_2001_24x36__Peru.jpg" alt="Calle de Cuzco 2" loading="lazy">
+              <figcaption>Calle de Cuzco 2</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="dots" id="dots" aria-label="Puntos"></div>
+        <div class="hintRow">
+          <span class="hintPill">Deslizar</span>
+          <span class="hintPill">Teclas ← →</span>
+          <span class="hintPill">Clic para ampliar</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz">
+      <h3>Cuestionario</h3>
+      <div class="qtext">¿Qué muestra la cultura y la vida en los Andes?</div>
+      <label class="opt"><input type="radio" name="qArte" value="0">Objetos modernos sin historia</label>
+      <label class="opt"><input type="radio" name="qArte" value="1">Tejidos de colores con lana de alpaca</label>
+      <label class="opt"><input type="radio" name="qArte" value="0">Solo edificios nuevos</label>
+      <button class="btn primary" data-check="qArte" data-ans="1" type="button">Comprobar</button>
+      <div class="feedback" data-out="qArte"></div>
+    </div>
+  </section>
+
+  <section class="section reveal" id="musica">
+    <div class="secHead">
+      <div>
+        <h2>Música de Perú</h2>
+        <p class="lead">La música peruana mezcla tradiciones indígenas, españolas y africanas.</p>
+      </div>
+      <button class="btn" id="muteVideos" type="button">Silenciar</button>
+    </div>
+
+    <div class="card panel columns">
+      <div>
+        <p>
+          Un instrumento muy importante es la quena, una flauta andina. Otro instrumento es el charango,
+          una guitarra pequeña.
+        </p>
+
+        <p>
+          En los Andes la música es tranquila y usa flautas y tambores. En la costa hay música más rápida y alegre.
+        </p>
+
+        <p>
+          Un baile muy conocido es la Marinera. También es famosa la música andina con instrumentos tradicionales.
+        </p>
+
+        <div class="details">
+          <details>
+            <summary>Ejemplos de música peruana</summary>
+            <ul class="list">
+              <li>música andina</li>
+              <li>Marinera</li>
+              <li>festejo</li>
+              <li>huayno</li>
+            </ul>
+          </details>
+        </div>
+
+        <div class="quiz">
+          <h3>Cuestionario</h3>
+          <div class="qtext">¿Qué instrumento es una flauta andina?</div>
+          <label class="opt"><input type="radio" name="qMusica" value="1">La quena</label>
+          <label class="opt"><input type="radio" name="qMusica" value="0">El piano</label>
+          <label class="opt"><input type="radio" name="qMusica" value="0">El saxofón</label>
+          <button class="btn primary" data-check="qMusica" data-ans="1" type="button">Comprobar</button>
+          <div class="feedback" data-out="qMusica"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="ytgrid" aria-label="Videos">
+          <div class="ytcard">
+            <div class="ytTitle">Video 1</div>
+            <div class="yt">
+              <iframe class="ytframe"
+                src="https://www.youtube-nocookie.com/embed/M_gSydN_BYM"
+                title="Video 1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+
+          <div class="ytcard">
+            <div class="ytTitle">Video 2</div>
+            <div class="yt">
+              <iframe class="ytframe"
+                src="https://www.youtube-nocookie.com/embed/qsNEu750zok"
+                title="Video 2"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+
+          <div class="ytcard">
+            <div class="ytTitle">Video 3</div>
+            <div class="yt">
+              <iframe class="ytframe"
+                src="https://www.youtube-nocookie.com/embed/XOSbuaX4AMY"
+                title="Video 3"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin:10px 0 0; color:var(--muted); font-weight:800">
+          Videos listos con los enlaces que enviaste
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal" id="lenguas">
+    <div class="secHead">
+      <div>
+        <h2>Lenguas en Perú</h2>
+        <p class="lead">La lengua principal es el español. También existen el quechua y el aimara.</p>
+      </div>
+
+      <button class="btn" id="sayBtn" type="button">Hablar</button>
+    </div>
+
+    <div class="card panel columns">
+      <div>
+        <p>En Perú se hablan diferentes lenguas.</p>
+
+        <p>
+          La lengua principal es el español. La mayoría de las personas lo hablan todos los días.
+        </p>
+
+        <p>
+          También existen lenguas indígenas. La más importante es el quechua, la lengua de los incas.
+          Otra lengua es el aimara.
+        </p>
+
+        <p>
+          Muchas personas en Perú hablan dos lenguas, por ejemplo español y quechua.
+        </p>
+
+        <div class="details">
+          <details>
+            <summary>Lenguas importantes en Perú</summary>
+            <ul class="list">
+              <li>español</li>
+              <li>quechua</li>
+              <li>aimara</li>
+            </ul>
+          </details>
+        </div>
+
+        <div class="quiz">
+          <h3>Cuestionario</h3>
+          <div class="qtext">¿Cuál es la lengua principal en Perú?</div>
+          <label class="opt"><input type="radio" name="qLenguas" value="1">El español</label>
+          <label class="opt"><input type="radio" name="qLenguas" value="0">El ruso</label>
+          <label class="opt"><input type="radio" name="qLenguas" value="0">El japonés</label>
+          <button class="btn primary" data-check="qLenguas" data-ans="1" type="button">Comprobar</button>
+          <div class="feedback" data-out="qLenguas"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="quiz">
+          <h3>Frases</h3>
+          <p id="sayOut" style="margin:0 0 10px; color:var(--muted); font-weight:800">
+            Pulsa un botón para escuchar
+          </p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn" data-say="Hola" type="button">Hola</button>
+            <button class="btn" data-say="Buenos días" type="button">Buenos días</button>
+            <button class="btn" data-say="¿Qué tal?" type="button">¿Qué tal?</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Perú</span>
+    <span>Paul Liechti</span>
+  </footer>
 </main>
 
-<button id="toTop">↑</button>
+<button id="toTop" type="button" aria-label="Arriba">↑</button>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lbTop">
+    <button class="lbBtn" id="lbPrev" type="button">←</button>
+    <button class="lbBtn" id="lbClose" type="button">Cerrar</button>
+    <button class="lbBtn" id="lbNext" type="button">→</button>
+  </div>
+  <img id="lbImg" alt="Vista ampliada">
+</div>
 
 <script>
-const progress=document.getElementById("progress");
-const toTop=document.getElementById("toTop");
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => Array.from(el.querySelectorAll(s));
 
-window.addEventListener("scroll",()=>{
-const doc=document.documentElement;
-progress.style.width=(doc.scrollTop/(doc.scrollHeight-doc.clientHeight))*100+"%";
-toTop.classList.toggle("show",doc.scrollTop>500);
+const progress = $("#progress");
+const toTop = $("#toTop");
+const navLinks = $$(".navlink");
+const sectionIds = ["arte","musica","lenguas"];
+const sections = sectionIds.map(id => document.getElementById(id));
+
+function pad(n){ return String(n).padStart(2,"0"); }
+function tickClock(){
+  const d = new Date();
+  $("#clock").textContent = `${pad(d.getHours())}.${pad(d.getMinutes())}`;
+}
+tickClock();
+setInterval(tickClock, 1000 * 10);
+
+function updateUI(){
+  const doc = document.documentElement;
+  const st = doc.scrollTop || document.body.scrollTop;
+  const h = doc.scrollHeight - doc.clientHeight;
+  const p = h > 0 ? (st / h) * 100 : 0;
+  progress.style.width = p + "%";
+  toTop.classList.toggle("show", st > 650);
+
+  let current = "arte";
+  for(const s of sections){
+    const r = s.getBoundingClientRect();
+    if(r.top <= 130) current = s.id;
+  }
+  navLinks.forEach(a => a.classList.toggle("active", a.dataset.target === current));
+}
+window.addEventListener("scroll", updateUI);
+window.addEventListener("resize", updateUI);
+updateUI();
+
+toTop.addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
+
+$("#toggleTheme").addEventListener("click", () => {
+  document.body.classList.toggle("dark");
 });
 
-toTop.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
-document.getElementById("toggleMode").onclick=()=>document.body.classList.toggle("dark");
+$("#randomJump").addEventListener("click", () => {
+  const ids = ["arte","musica","lenguas"];
+  const pick = ids[Math.floor(Math.random()*ids.length)];
+  document.getElementById(pick).scrollIntoView({behavior:"smooth"});
+});
 
-const track=document.getElementById("track");
-const slides=document.querySelectorAll(".slide");
-const info=document.getElementById("galleryInfo");
-let index=0;
+const track = $("#track");
+const slides = $$(".slide");
+const gallery = $("#gallery");
+const info = $("#galleryInfo");
+const dotsWrap = $("#dots");
+const prevBtn = $("#prevImg");
+const nextBtn = $("#nextImg");
 
-function go(i){
-index=Math.max(0,Math.min(slides.length-1,i));
-track.style.transform=`translateX(-${index*100}%)`;
-info.textContent=`${index+1} / ${slides.length}`;
+let idx = 0;
+const total = slides.length;
+
+function renderDots(){
+  dotsWrap.innerHTML = "";
+  for(let i=0;i<total;i++){
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "dot" + (i === idx ? " on" : "");
+    b.addEventListener("click", () => go(i));
+    dotsWrap.appendChild(b);
+  }
 }
 
-document.getElementById("prevImg").onclick=()=>go(index-1);
-document.getElementById("nextImg").onclick=()=>go(index+1);
+function go(i){
+  idx = Math.max(0, Math.min(total-1, i));
+  track.style.transform = `translateX(-${idx*100}%)`;
+  info.textContent = `${idx+1} / ${total}`;
+  prevBtn.disabled = idx === 0;
+  nextBtn.disabled = idx === total-1;
+  renderDots();
+}
 
-let startX=0;
-gallery.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
-gallery.addEventListener("touchend",e=>{
-let dx=e.changedTouches[0].clientX-startX;
-if(dx>40)go(index-1);
-if(dx<-40)go(index+1);
+prevBtn.addEventListener("click", () => go(idx-1));
+nextBtn.addEventListener("click", () => go(idx+1));
+
+document.addEventListener("keydown", (e) => {
+  if(lightbox.classList.contains("open")){
+    if(e.key === "ArrowLeft") lbGo(lbIndex-1);
+    if(e.key === "ArrowRight") lbGo(lbIndex+1);
+    if(e.key === "Escape") closeLB();
+    return;
+  }
+  if(e.key === "ArrowLeft") go(idx-1);
+  if(e.key === "ArrowRight") go(idx+1);
 });
-</script>
 
+let startX = 0, currentX = 0, dragging = false;
+gallery.addEventListener("touchstart", (e) => {
+  dragging = true;
+  startX = e.touches[0].clientX;
+  currentX = startX;
+}, {passive:true});
+
+gallery.addEventListener("touchmove", (e) => {
+  if(!dragging) return;
+  currentX = e.touches[0].clientX;
+}, {passive:true});
+
+gallery.addEventListener("touchend", () => {
+  if(!dragging) return;
+  dragging = false;
+  const dx = currentX - startX;
+  if(dx > 45) go(idx-1);
+  else if(dx < -45) go(idx+1);
+});
+
+go(0);
+
+const lightbox = $("#lightbox");
+const lbImg = $("#lbImg");
+const lbClose = $("#lbClose");
+const lbPrev = $("#lbPrev");
+const lbNext = $("#lbNext");
+let lbIndex = 0;
+
+function openLB(i){
+  lbIndex = i;
+  const full = slides[lbIndex].dataset.full || slides[lbIndex].querySelector("img").src;
+  lbImg.src = full;
+  lightbox.classList.add("open");
+  lightbox.setAttribute("aria-hidden","false");
+  lbPrev.disabled = lbIndex === 0;
+  lbNext.disabled = lbIndex === total-1;
+}
+
+function closeLB(){
+  lightbox.classList.remove("open");
+  lightbox.setAttribute("aria-hidden","true");
+  lbImg.src = "";
+}
+
+function lbGo(i){
+  lbIndex = Math.max(0, Math.min(total-1, i));
+  openLB(lbIndex);
+}
+
+slides.forEach((s, i) => s.addEventListener("click", () => openLB(i)));
+$("#heroMedia").addEventListener("click", () => openLB(0));
+lbClose.addEventListener("click", closeLB);
+lbPrev.addEventListener("click", () => lbGo(lbIndex-1));
+lbNext.addEventListener("click", () => lbGo(lbIndex+1));
+lightbox.addEventListener("click", (e) => { if(e.target === lightbox) closeLB(); });
+
+$("#openArt").addEventListener("click", () => openLB(idx));
+
+$$("[data-check]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const name = btn.dataset.check;
+    const ans = btn.dataset.ans;
+    const chosen = document.querySelector(`input[name="${name}"]:checked`);
+    const out = document.querySelector(`[data-out="${name}"]`);
+    out.className = "feedback";
+    if(!chosen){
+      out.textContent = "Elige una respuesta.";
+      return;
+    }
+    if(chosen.value === ans){
+      out.textContent = "Correcto.";
+      out.classList.add("ok");
+    }else{
+      out.textContent = "Incorrecto.";
+      out.classList.add("bad");
+    }
+  });
+});
+
+const arteFacts = [
+  "Los tejidos andinos usan patrones y colores con significado cultural.",
+  "La cerámica tradicional refleja estilos antiguos y regionales.",
+  "El arte moderno en Lima incluye murales sobre historia y sociedad."
+];
+
+$("#arteFact").addEventListener("click", () => {
+  $("#arteFactOut").textContent = arteFacts[Math.floor(Math.random()*arteFacts.length)];
+});
+
+let muted = false;
+$("#muteVideos").addEventListener("click", () => {
+  muted = !muted;
+  const frames = $$(".ytframe");
+  frames.forEach(f => {
+    const url = new URL(f.src);
+    url.searchParams.set("mute", muted ? "1" : "0");
+    f.src = url.toString();
+  });
+  $("#muteVideos").textContent = muted ? "Activar sonido" : "Silenciar";
+});
+
+const sayOut = $("#sayOut");
+function speak(text){
+  sayOut.textContent = `Frase: ${text}`;
+  if("speechSynthesis" in window){
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "es-ES";
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }
+}
+$("#sayBtn").addEventListener("click", () => speak("Hola, Perú"));
+$$("[data-say]").forEach(b => b.addEventListener("click", () => speak(b.dataset.say)));
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add("on"); });
+}, {threshold: 0.10});
+$$(".reveal").forEach(el => io.observe(el));
+</script>
 </body>
 </html>
-
