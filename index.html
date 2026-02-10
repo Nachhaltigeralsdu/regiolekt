@@ -21,6 +21,7 @@ body{
   font-family:Arial, sans-serif;
   background:var(--bg);
   color:var(--text);
+  line-height:1.6;
 }
 
 .dark{
@@ -113,10 +114,6 @@ header{
   align-items:center;
 }
 
-button{
-  cursor:pointer;
-}
-
 .ytgrid{
   display:grid;
   gap:14px;
@@ -198,8 +195,19 @@ iframe{
 <section class="section" id="arte">
 <h2>Arte en Perú</h2>
 <div class="card">
-<p>El arte en Perú tiene una historia muy larga. Empieza con las culturas antiguas como los incas.</p>
-<p>Muchas personas hacen tejidos de colores con lana de alpaca.</p>
+<p>El arte en Perú tiene una historia muy larga. Empieza con las culturas antiguas como los incas. Ellos hacían esculturas, templos y objetos de oro y piedra.</p>
+
+<p>En Perú también hay arte tradicional. Muchas personas hacen tejidos de colores con lana de alpaca. Estos tejidos muestran la cultura y la vida en los Andes.</p>
+
+<p>Hoy existe también arte moderno en ciudades como Lima. Los artistas pintan murales y cuadros sobre la historia y la sociedad de Perú.</p>
+
+<strong>Ejemplos de arte peruano</strong>
+<ul>
+<li>cerámica tradicional</li>
+<li>tejidos andinos</li>
+<li>arquitectura inca</li>
+<li>pintura moderna</li>
+</ul>
 </div>
 </section>
 
@@ -207,6 +215,20 @@ iframe{
 <h2>Música de Perú</h2>
 <div class="card">
 <p>La música peruana mezcla tradiciones indígenas, españolas y africanas.</p>
+
+<p>Un instrumento muy importante es la quena, una flauta andina. Otro instrumento es el charango, una guitarra pequeña.</p>
+
+<p>En los Andes la música es tranquila y usa flautas y tambores. En la costa hay música más rápida y alegre.</p>
+
+<p>Un baile muy conocido es la Marinera. También es famosa la música andina con instrumentos tradicionales.</p>
+
+<strong>Ejemplos de música peruana</strong>
+<ul>
+<li>música andina</li>
+<li>Marinera</li>
+<li>festejo</li>
+<li>huayno</li>
+</ul>
 </div>
 
 <div class="ytgrid">
@@ -219,7 +241,17 @@ iframe{
 <section class="section" id="lenguas">
 <h2>Lenguas en Perú</h2>
 <div class="card">
-<p>La lengua principal es el español. También existen el quechua y el aimara.</p>
+<p>En Perú se hablan diferentes lenguas.</p>
+<p>La lengua principal es el español. La mayoría de las personas lo hablan todos los días.</p>
+<p>También existen lenguas indígenas. La más importante es el quechua, la lengua de los incas. Otra lengua es el aimara.</p>
+<p>Muchas personas en Perú hablan dos lenguas, por ejemplo español y quechua.</p>
+
+<strong>Lenguas importantes en Perú</strong>
+<ul>
+<li>español</li>
+<li>quechua</li>
+<li>aimara</li>
+</ul>
 </div>
 </section>
 
@@ -228,30 +260,27 @@ iframe{
 <button id="toTop">↑</button>
 
 <script>
-const progress = document.getElementById("progress");
-const toTop = document.getElementById("toTop");
+const progress=document.getElementById("progress");
+const toTop=document.getElementById("toTop");
 
-window.addEventListener("scroll", () => {
-const doc = document.documentElement;
-const scrolled = doc.scrollTop / (doc.scrollHeight - doc.clientHeight) * 100;
-progress.style.width = scrolled + "%";
-toTop.classList.toggle("show", doc.scrollTop > 500);
+window.addEventListener("scroll",()=>{
+const doc=document.documentElement;
+progress.style.width=(doc.scrollTop/(doc.scrollHeight-doc.clientHeight))*100+"%";
+toTop.classList.toggle("show",doc.scrollTop>500);
 });
 
-toTop.onclick = () => window.scrollTo({top:0,behavior:"smooth"});
+toTop.onclick=()=>window.scrollTo({top:0,behavior:"smooth"});
+document.getElementById("toggleMode").onclick=()=>document.body.classList.toggle("dark");
 
-document.getElementById("toggleMode").onclick =
-() => document.body.classList.toggle("dark");
-
-const track = document.getElementById("track");
-const slides = document.querySelectorAll(".slide");
-const info = document.getElementById("galleryInfo");
-let index = 0;
+const track=document.getElementById("track");
+const slides=document.querySelectorAll(".slide");
+const info=document.getElementById("galleryInfo");
+let index=0;
 
 function go(i){
-index = Math.max(0, Math.min(slides.length-1, i));
-track.style.transform = `translateX(-${index*100}%)`;
-info.textContent = `${index+1} / ${slides.length}`;
+index=Math.max(0,Math.min(slides.length-1,i));
+track.style.transform=`translateX(-${index*100}%)`;
+info.textContent=`${index+1} / ${slides.length}`;
 }
 
 document.getElementById("prevImg").onclick=()=>go(index-1);
